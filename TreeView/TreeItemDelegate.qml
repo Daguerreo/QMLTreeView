@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Controls 2.12
 
 Row {
     id: root
@@ -8,6 +9,15 @@ Row {
 
     spacing: 10
 
+    Rectangle {
+        id: squareIndicator
+        anchors.verticalCenter: parent.verticalCenter
+        width: 20
+        height: 20
+        color: root.color
+    }
+
+
     Text {
         id: contentData
 
@@ -16,3 +26,4 @@ Row {
         font.pixelSize: 20
     }
 }
+

@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.15
 
 Item {
@@ -24,6 +25,7 @@ Item {
 
         Repeater {
             model: childCount
+            Layout.fillWidth: true
 
             delegate: ColumnLayout {
                 id: itemColumn
@@ -46,7 +48,7 @@ Item {
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     id: column
 
                     Layout.fillWidth: true
@@ -55,17 +57,17 @@ Item {
                     height: row.implicitHeight
                     spacing: 10
 
-                    Row {
+                    RowLayout {
                         id: row
 
-                        width: parent.width
+                        Layout.fillWidth: true
+
                         spacing: 10
 
                         // Indicator
                         Rectangle {
                             id: indicator
 
-                            anchors.verticalCenter: parent.verticalCenter
                             implicitWidth: 20
                             implicitHeight: 20
                             rotation: _prop.expanded ? 90 : 0
@@ -82,14 +84,14 @@ Item {
                         }
 
                         //  Content
-                        ModelItem {
+                        TreeItemDelegate {
+                            Layout.fillWidth: true
+
                             text: _prop.currentData
                             color: root.color
                         }
 
-                        TapHandler {
-                            onDoubleTapped: _prop.toggle()
-                        }
+                        TapHandler { onDoubleTapped: _prop.toggle() }
                     }
                 }
 

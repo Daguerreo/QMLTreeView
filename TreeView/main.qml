@@ -19,7 +19,7 @@ Window {
             width: parent.width
             height: parent.height
             border {
-                width: 1
+                width: 0
                 color: "gray"
             }
             clip: true
