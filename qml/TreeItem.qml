@@ -85,14 +85,6 @@ Item {
 
                             spacing: 10
 
-                            Rectangle {
-                                id: squareIndicator
-                                anchors.verticalCenter: parent.verticalCenter
-                                width: 20
-                                height: 20
-                                color: root.color
-                            }
-
                             Text {
                                 id: contentData
 
@@ -120,20 +112,6 @@ Item {
                         item.parentIndex = _prop.currentIndex
                         item.childCount = _prop.itemChildCount
                         item.itemLeftPadding = root.childLeftPadding
-                    }
-
-                    Binding {
-                        target: loader.item;
-                        property: "itemLeftPadding";
-                        value: root.childLeftPadding
-                        when: loader.status == Loader.Ready
-                    }
-
-                    Binding {
-                        target: loader.item;
-                        property: "color";
-                        value: root.color
-                        when: loader.status == Loader.Ready
                     }
 
                     Binding {
