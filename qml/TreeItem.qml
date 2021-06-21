@@ -10,21 +10,13 @@ Item {
     property var childCount
 
     // layout properties
-    property int itemLeftPadding: 30
+    property int itemLeftPadding: 0
+    property int childLeftPadding: 30
     property string color: "black"
     property string handleColor: color
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
-
-    QtObject {
-        id: separator
-
-        property int height: 1
-        property string color: "gray"
-        property real opacity: 0.5
-        property bool visible: false
-    }
 
     ColumnLayout {
         width: parent.width
@@ -53,6 +45,7 @@ Item {
                     }
                 }
 
+                // Row Delegate
                 Delegate {
                     id: theDelegate
 
@@ -61,25 +54,13 @@ Item {
                     color: root.color
 
                     handle.opacity: _prop.hasChildren
-                    handle.expanded: _prop.expanded
+                    expanded: _prop.expanded
 
                     onToggle: _prop.toggle()
 
                     TapHandler {
                         onDoubleTapped: _prop.toggle()
                     }
-                }
-
-                Rectangle {
-                    id: separatorRect
-
-                    Layout.fillWidth: true
-                    Layout.leftMargin: -100
-                    width: parent.width
-                    height: separator.height
-                    color: separator.color
-                    opacity: separator.opacity
-                    visible: separator.visible
                 }
 
                 Loader {
@@ -92,6 +73,7 @@ Item {
                         item.model = root.model
                         item.parentIndex = _prop.currentIndex
                         item.childCount = _prop.itemChildCount
+                        item.itemLeftPadding = root.childLeftPadding
                     }
 
                     Binding {

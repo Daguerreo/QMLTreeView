@@ -4,9 +4,12 @@ import QtQuick.Layouts 1.15
 Column {
     id: root
 
+    property alias handle: indicator
     property alias text: modelItem.text
-    property alias handle: handle
     property alias color: modelItem.color
+
+    property bool expanded: false
+    property string handleColor: color
 
     width: row.implicitWidth
     height: row.implicitHeight
@@ -19,13 +22,21 @@ Column {
         width: parent.width
         spacing: 10
 
-        Handle {
-            id: handle
+        Rectangle {
+            id: indicator
 
             anchors.verticalCenter: parent.verticalCenter
             opacity: 0
-            expanded: false
-            color: root.color
+            implicitWidth: 20
+            implicitHeight: 20
+            rotation: expanded ? 90 : 0
+
+            Text {
+                anchors.centerIn: parent
+                text: "▶"
+                antialiasing: true
+                color: handleColor
+            }
 
             TapHandler { onSingleTapped:  root.toggle() }
         }

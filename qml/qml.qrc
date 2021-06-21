@@ -3,7 +3,6 @@
         <file>main.qml</file>
         <file>Delegate.qml</file>
         <file>TreeItem.qml</file>
-        <file>Handle.qml</file>
         <file>ModelItem.qml</file>
         <file>ListItem.qml</file>
     </qresource>
