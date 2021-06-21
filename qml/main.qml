@@ -51,6 +51,7 @@ Window {
 
                     itemLeftPadding: 0
                     color: "#3c85b5"
+//                    handleColor: "red"
                 }
             }
         }

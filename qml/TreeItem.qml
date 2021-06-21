@@ -29,6 +29,7 @@ Item {
                 id: itemColumn
 
                 Layout.leftMargin: itemLeftPadding
+
                 spacing: 10
 
                 QtObject {
@@ -45,21 +46,66 @@ Item {
                     }
                 }
 
-                // Row Delegate
-                Delegate {
-                    id: theDelegate
+                Column {
+                    id: column
 
                     Layout.fillWidth: true
-                    text: _prop.currentData
-                    color: root.color
 
-                    handle.opacity: _prop.hasChildren
-                    expanded: _prop.expanded
+                    width: row.implicitWidth
+                    height: row.implicitHeight
+                    spacing: 10
 
-                    onToggle: _prop.toggle()
+                    Row {
+                        id: row
 
-                    TapHandler {
-                        onDoubleTapped: _prop.toggle()
+                        width: parent.width
+                        spacing: 10
+
+                        Rectangle {
+                            id: indicator
+
+                            anchors.verticalCenter: parent.verticalCenter
+                            implicitWidth: 20
+                            implicitHeight: 20
+                            rotation: _prop.expanded ? 90 : 0
+                            opacity: _prop.hasChildren
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "▶"
+                                antialiasing: true
+                                color: handleColor
+                            }
+
+                            TapHandler { onSingleTapped:  _prop.toggle() }
+                        }
+
+                        Row {
+                            id: rowDelegate
+
+                            spacing: 10
+
+                            Rectangle {
+                                id: squareIndicator
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 20
+                                height: 20
+                                color: root.color
+                            }
+
+                            Text {
+                                id: contentData
+
+                                anchors.verticalCenter: parent.verticalCenter
+                                color: root.color
+                                font.pixelSize: 20
+                                text: _prop.currentData
+                            }
+                        }
+
+                        TapHandler {
+                            onDoubleTapped: _prop.toggle()
+                        }
                     }
                 }
 
@@ -74,6 +120,20 @@ Item {
                         item.parentIndex = _prop.currentIndex
                         item.childCount = _prop.itemChildCount
                         item.itemLeftPadding = root.childLeftPadding
+                    }
+
+                    Binding {
+                        target: loader.item;
+                        property: "itemLeftPadding";
+                        value: root.childLeftPadding
+                        when: loader.status == Loader.Ready
+                    }
+
+                    Binding {
+                        target: loader.item;
+                        property: "color";
+                        value: root.color
+                        when: loader.status == Loader.Ready
                     }
 
                     Binding {
