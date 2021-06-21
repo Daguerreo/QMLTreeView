@@ -13,7 +13,7 @@ public:
    ~TreeItem();
 
    TreeItem* parentItem();
-   void setParentItem(TreeItem *parentItem);
+   void setParentItem(TreeItem* parentItem);
 
    void appendChild(TreeItem* item);
    void removeChild(TreeItem* item);

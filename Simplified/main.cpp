@@ -26,20 +26,20 @@ int main(int argc, char *argv[]) {
    auto grateChild1 = new TreeItem("GreateChild1");
    auto grateChild2 = new TreeItem("GreateChild2");
 
-   treeModel->addTreeItem(root, parent1);
-   treeModel->addTreeItem(root, parent2);
-   treeModel->addTreeItem(root, parent3);
-   treeModel->addTreeItem(root, parent4);
-   treeModel->addTreeItem(root, parent5);
-   treeModel->addTreeItem(root, parent6);
+   treeModel->addItem(root, parent1);
+   treeModel->addItem(root, parent2);
+   treeModel->addItem(root, parent3);
+   treeModel->addItem(root, parent4);
+   treeModel->addItem(root, parent5);
+   treeModel->addItem(root, parent6);
 
-   treeModel->addTreeItem(parent1, child1);
-   treeModel->addTreeItem(parent1, child2);
-   treeModel->addTreeItem(parent1, child3);
-   treeModel->addTreeItem(child1, grandChild1);
-   treeModel->addTreeItem(child1, grandChild2);
-   treeModel->addTreeItem(grandChild1, grateChild1);
-   treeModel->addTreeItem(grandChild1, grateChild2);
+   treeModel->addItem(parent1, child1);
+   treeModel->addItem(parent1, child2);
+   treeModel->addItem(parent1, child3);
+   treeModel->addItem(child1, grandChild1);
+   treeModel->addItem(child1, grandChild2);
+   treeModel->addItem(grandChild1, grateChild1);
+   treeModel->addItem(grandChild1, grateChild2);
 
    QQmlApplicationEngine engine;
    engine.rootContext()->setContextProperty("treeModel", treeModel);
@@ -54,3 +54,4 @@ int main(int argc, char *argv[]) {
 
    return app.exec();
 }
+

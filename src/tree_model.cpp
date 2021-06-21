@@ -15,19 +15,19 @@ int TreeModel::rowCount(const QModelIndex& parent) const
    return internalPointer(parent)->childCount();
 }
 
-int TreeModel::columnCount(const QModelIndex & /*parent*/) const
+int TreeModel::columnCount(const QModelIndex&  /*parent*/) const
 {
    // This is basically flatten as a list model
    return 1;
 }
 
-QModelIndex TreeModel::index(const int row, const int column, const QModelIndex &parent) const
+QModelIndex TreeModel::index(const int row, const int column, const QModelIndex& parent) const
 {
    if (!hasIndex(row, column, parent)){
       return QModelIndex();
    }
 
-   TreeItem *item = _rootItem.get();
+   TreeItem* item = _rootItem.get();
    if (parent.isValid()){
       item = internalPointer(parent);
    }
@@ -39,7 +39,7 @@ QModelIndex TreeModel::index(const int row, const int column, const QModelIndex 
    return QModelIndex();
 }
 
-QModelIndex TreeModel::parent(const QModelIndex &index) const
+QModelIndex TreeModel::parent(const QModelIndex& index) const
 {
    if (!index.isValid()) return QModelIndex();
 
@@ -53,7 +53,7 @@ QModelIndex TreeModel::parent(const QModelIndex &index) const
    return createIndex(parentItem->row(), 0, parentItem);
 }
 
-QVariant TreeModel::data(const QModelIndex &index, const int role) const
+QVariant TreeModel::data(const QModelIndex& index, const int role) const
 {
    if (!index.isValid() || role != Qt::DisplayRole) {
       return QVariant();
@@ -62,8 +62,12 @@ QVariant TreeModel::data(const QModelIndex &index, const int role) const
    return internalPointer(index)->data();
 }
 
-void TreeModel::addTreeItem(TreeItem *parent, TreeItem *child)
+void TreeModel::addItem(TreeItem* parent, TreeItem* child)
 {
+   if(!child){
+      return;
+   }
+
    emit layoutAboutToBeChanged();
 
    if (child->parentItem()) {
@@ -92,5 +96,5 @@ QModelIndex TreeModel::rootIndex()
 
 TreeItem* TreeModel::internalPointer(const QModelIndex& index) const
 {
-   return static_cast<TreeItem *>(index.internalPointer());
+   return static_cast<TreeItem* >(index.internalPointer());
 }

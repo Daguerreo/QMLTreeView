@@ -4,13 +4,10 @@ import QtQuick.Controls 2.14
 Item {
     id: root
 
-    property int itemLeftPadding: 30
+    property var model
+    property string color: "black"
 
     anchors.fill: parent
-
-    Component.onCompleted: {
-        fillData()
-    }
 
     ListModel {
         id: listItemModel
@@ -31,12 +28,12 @@ Item {
 
             ModelItem {
                 text: name
+                color: root.color
             }
 
             Rectangle {
                 anchors {
                     left: parent.left
-                    leftMargin: -100
                     right: parent.right
                 }
 
@@ -48,23 +45,27 @@ Item {
         }
     }
 
-    function fillData() {
-        let rootIndex = treeModel.rootIndex()
+    Component.onCompleted: {
+        fillData()
+    }
 
-        for(var i = 0; i < treeModel.rowCount(rootIndex); i++) {
-            let index =treeModel.index(i, 0, rootIndex)
-            listItemModel.append({"name":  treeModel.data(index)})
+    function fillData() {
+        let rootIndex = model.rootIndex()
+
+        for(var i = 0; i < model.rowCount(rootIndex); i++) {
+            let index = model.index(i, 0, rootIndex)
+            listItemModel.append({"name":  model.data(index)})
             fillFromBranch(index)
         }
     }
 
     function fillFromBranch(modelIndex) {
-        let childCount = treeModel.rowCount(modelIndex)
+        let childCount = model.rowCount(modelIndex)
 
         if (childCount > 0) {
             for (var i = 0; i < childCount; i++) {
-                let index =treeModel.index(i, 0, modelIndex)
-                listItemModel.append({"name":  treeModel.data(index)})
+                let index = model.index(i, 0, modelIndex)
+                listItemModel.append({"name":  model.data(index)})
                 fillFromBranch(index)
             }
         }

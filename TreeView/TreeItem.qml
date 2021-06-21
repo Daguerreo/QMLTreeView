@@ -61,6 +61,7 @@ Item {
                         width: parent.width
                         spacing: 10
 
+                        // Indicator
                         Rectangle {
                             id: indicator
 
@@ -72,7 +73,7 @@ Item {
 
                             Text {
                                 anchors.centerIn: parent
-                                text: "▶"
+                                text: "❱"
                                 antialiasing: true
                                 color: handleColor
                             }
@@ -80,19 +81,10 @@ Item {
                             TapHandler { onSingleTapped:  _prop.toggle() }
                         }
 
-                        Row {
-                            id: rowDelegate
-
-                            spacing: 10
-
-                            Text {
-                                id: contentData
-
-                                anchors.verticalCenter: parent.verticalCenter
-                                color: root.color
-                                font.pixelSize: 20
-                                text: _prop.currentData
-                            }
+                        //  Content
+                        ModelItem {
+                            text: _prop.currentData
+                            color: root.color
                         }
 
                         TapHandler {

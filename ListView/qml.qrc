@@ -1,9 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Delegate.qml</file>
-        <file>TreeItem.qml</file>
         <file>ModelItem.qml</file>
-        <file>ListItem.qml</file>
+        <file>CollapsedTreeView.qml</file>
     </qresource>
 </RCC>

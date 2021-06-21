@@ -20,11 +20,9 @@ public:
    QModelIndex parent(const QModelIndex& childIndex) const override;
 
    QVariant data(const QModelIndex& index, const int role = 0) const override;
-
-   void addTreeItem(TreeItem* parent, TreeItem* child);
+   void addItem(TreeItem* parent, TreeItem* child);
 
    std::shared_ptr<TreeItem> rootItem() const;
-
    Q_INVOKABLE QModelIndex rootIndex();
 
 private:
