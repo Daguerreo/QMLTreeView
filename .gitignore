@@ -1,1 +1,45 @@
-/build/
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+moc_*.cpp
+qrc_*.cpp
+
+# Generic files
+*~
+*.autosave
+*.a
+*.core
+*.moc
+Makefile*
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Qt 
+*.pro.user*
+*.qmlproject.user
+**.qmake.stash
+**moc_predefs.h
+**/build
