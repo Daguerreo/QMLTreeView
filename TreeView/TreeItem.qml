@@ -14,8 +14,10 @@ Item {
     // layout properties
     property int itemLeftPadding: 0
     property int childLeftPadding: 30
-    property string color: "black"
-    property string handleColor: color
+    property color color: "black"
+    property color handleColor: color
+    property color hoverColor: "lightgray"
+    property bool hoverEnabled: true
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -59,40 +61,73 @@ Item {
                     height: row.implicitHeight
                     spacing: 10
 
-                    RowLayout {
-                        id: row
-
+                    Rectangle {
+                        id: rect
                         Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        color: _prop.isCurrentIndex ? hoverColor : "transparent"
 
-                        spacing: 10
+                        RowLayout {
+                            id: row
 
-                        // Indicator
-                        Rectangle {
-                            id: indicator
-
-                            implicitWidth: 20
-                            implicitHeight: 20
-                            rotation: _prop.expanded ? 90 : 0
-                            opacity: _prop.hasChildren
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "❱"
-                                antialiasing: true
-                                color: handleColor
-                            }
-
-                            TapHandler { onSingleTapped:  _prop.toggle() }
-                        }
-
-                        //  Content
-                        TreeItemDelegate {
                             Layout.fillWidth: true
 
-                            text: _prop.currentData
-                            color: root.color
-                        }
+                            spacing: 10
 
+                            // Indicator
+                            Rectangle {
+                                id: indicator
+
+                                implicitWidth: 20
+                                implicitHeight: 20
+                                rotation: _prop.expanded ? 90 : 0
+                                opacity: _prop.hasChildren
+                                color: "transparent"
+
+                                Label {
+                                    anchors.centerIn: parent
+                                    text: "❱"
+                                    antialiasing: true
+                                    color: handleColor
+                                }
+
+                                TapHandler { onSingleTapped:  _prop.toggle() }
+                            }
+
+                            //  Content
+                            Row {
+                                spacing: 10
+
+                                Rectangle {
+                                    id: squareIndicator
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 4
+                                    height: 40
+                                    color: root.color
+                                }
+
+
+                                Text {
+                                    id: contentData
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    color: root.color
+                                    font.pixelSize: 20
+                                    text: _prop.currentData
+
+                                }
+                            }
+
+                        }
+                        HoverHandler {
+                            onHoveredChanged: {
+                                if(root.hoverEnabled){
+                                    if(hovered) root.currentIndex = _prop.currentIndex
+                                    else root.currentIndex = null
+                                }
+                            }
+
+                        }
                         TapHandler { onDoubleTapped: _prop.toggle() }
                     }
                 }
