@@ -9,6 +9,7 @@ Item {
     property var model
     property var parentIndex
     property var childCount
+    property var currentIndex
 
     // layout properties
     property int itemLeftPadding: 0
@@ -42,6 +43,7 @@ Item {
                     property var itemChildCount: root.model.rowCount(currentIndex)
                     property bool expanded: false
                     readonly property bool hasChildren: itemChildCount > 0
+                    readonly property bool isCurrentIndex: _prop.currentIndex === root.currentIndex
 
                     function toggle(){
                         if(_prop.hasChildren) _prop.expanded = !_prop.expanded
