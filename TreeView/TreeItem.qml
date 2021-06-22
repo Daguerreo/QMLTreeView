@@ -9,7 +9,7 @@ Item {
     property var model
     property var parentIndex
     property var childCount
-    property var currentIndex
+    property var currentIndex: null
 
     // layout properties
     property int itemLeftPadding: 0
@@ -17,7 +17,7 @@ Item {
     property color color: "black"
     property color handleColor: color
     property color hoverColor: "lightgray"
-    property bool hoverEnabled: true
+    property bool hoverEnabled: false
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -62,7 +62,7 @@ Item {
                     spacing: 10
 
                     Rectangle {
-                        id: rect
+                        id: rowOverlay
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                         color: _prop.isCurrentIndex ? hoverColor : "transparent"
@@ -101,7 +101,7 @@ Item {
                                 Rectangle {
                                     id: squareIndicator
                                     anchors.verticalCenter: parent.verticalCenter
-                                    width: 4
+                                    width: 8
                                     height: 40
                                     color: root.color
                                 }
@@ -151,18 +151,22 @@ Item {
                         value: root.color
                         when: loader.status == Loader.Ready
                     }
-
                     Binding {
                         target: loader.item;
                         property: "handleColor";
                         value: root.handleColor
                         when: loader.status == Loader.Ready
                     }
-
                     Binding {
                         target: loader.item;
                         property: "hoverColor";
                         value: root.hoverColor
+                        when: loader.status == Loader.Ready
+                    }
+                    Binding {
+                        target: loader.item;
+                        property: "hoverEnabled";
+                        value: root.hoverEnabled
                         when: loader.status == Loader.Ready
                     }
                 }

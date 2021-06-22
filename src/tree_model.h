@@ -11,7 +11,7 @@ class TreeModel : public QAbstractItemModel
    Q_OBJECT
 
 public:
-   explicit TreeModel(QObject *parent = nullptr);
+   explicit TreeModel(QObject* parent = nullptr);
 
    int rowCount(const QModelIndex& index) const override;
    int columnCount(const QModelIndex& index) const override;

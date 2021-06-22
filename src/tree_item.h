@@ -25,6 +25,8 @@ public:
    const QVariant& data() const;
    void setData(const QVariant& data);
 
+   bool isLeaf() const;
+
 private:
    TreeItem* _parentItem;
    QVector<TreeItem*> _childItems;

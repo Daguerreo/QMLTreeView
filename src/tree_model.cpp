@@ -1,6 +1,6 @@
 #include "tree_model.h"
 
-TreeModel::TreeModel(QObject *parent)
+TreeModel::TreeModel(QObject* parent)
    : QAbstractItemModel(parent),
      _rootItem{std::make_shared<TreeItem>(QVariantList{})}
 {
@@ -41,7 +41,9 @@ QModelIndex TreeModel::index(const int row, const int column, const QModelIndex&
 
 QModelIndex TreeModel::parent(const QModelIndex& index) const
 {
-   if (!index.isValid()) return QModelIndex();
+   if (!index.isValid()){
+      return QModelIndex();
+   }
 
    TreeItem* childItem = internalPointer(index);
    TreeItem* parentItem = childItem->parentItem();

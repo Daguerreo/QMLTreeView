@@ -9,6 +9,7 @@ Flickable {
     property color color: "black"
     property color handleColor: color
     property color hoverColor: "lightgray"
+    property alias hoverEnabled: tree.hoverEnabled
 
     contentHeight: tree.height
     contentWidth: parent.width

@@ -14,6 +14,7 @@ Window {
         anchors.fill: parent
         model: treeModel
         color: "#3c85b5"
+        hoverEnabled: true
         hoverColor: "skyblue"
     }
 }

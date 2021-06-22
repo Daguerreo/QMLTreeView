@@ -10,47 +10,35 @@ Window {
     height: 400
     title: qsTr("Simplified TreeView")
 
-    Row {
+    // This is a simplified TreeView with a Flickable with the TreeItem.
+    // If you need the component as is just use this example, otherwise go for
+    // the TreeView example
+
+    Flickable {
+        id: treeView
+
         anchors.fill: parent
+        contentHeight: tree.height
+        contentWidth: parent.width
+        boundsBehavior: Flickable.StopAtBounds
+        ScrollBar.vertical: ScrollBar {}
 
-        Rectangle {
-            id: treePart
+        TreeItem {
+            id: tree
 
-            width: parent.width
-            height: parent.height
-            border {
-                width: 1
-                color: "gray"
+            anchors {
+                top: parent.top
+                left: parent.left
+                leftMargin: 5
+                topMargin: 5
             }
-            clip: true
 
-            Flickable {
-                id: toolbarFlickable
+            model: treeModel
+            parentIndex: treeModel.rootIndex()
+            childCount: treeModel.rowCount(parentIndex)
 
-                anchors.fill: parent
-                contentHeight: tree.height
-                contentWidth: parent.width
-                boundsBehavior: Flickable.StopAtBounds
-                ScrollBar.vertical: ScrollBar {}
-
-                TreeItem {
-                    id: tree
-
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        leftMargin: 5
-                        topMargin: 5
-                    }
-
-                    model: treeModel
-                    parentIndex: treeModel.rootIndex()
-                    childCount: treeModel.rowCount(parentIndex)
-
-                    itemLeftPadding: 0
-                    color: "black"
-                }
-            }
+            itemLeftPadding: 0
+            color: "black"
         }
     }
 }

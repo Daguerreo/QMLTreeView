@@ -20,19 +20,19 @@ TreeItem* TreeItem::parentItem()
    return _parentItem;
 }
 
-void TreeItem::setParentItem(TreeItem *parentItem)
+void TreeItem::setParentItem(TreeItem* parentItem)
 {
    _parentItem = parentItem;
 }
 
-void TreeItem::appendChild(TreeItem *item)
+void TreeItem::appendChild(TreeItem* item)
 {
    if(item && !_childItems.contains(item)){
       _childItems.append(item);
    }
 }
 
-void TreeItem::removeChild(TreeItem *item)
+void TreeItem::removeChild(TreeItem* item)
 {
    if(item){
       _childItems.removeAll(item);
@@ -59,10 +59,15 @@ void TreeItem::setData(const QVariant& data)
    _itemData = data;
 }
 
+bool TreeItem::isLeaf() const
+{
+   return _childItems.isEmpty();
+}
+
 int TreeItem::row() const
 {
    if (_parentItem){
-      return _parentItem->_childItems.indexOf(const_cast<TreeItem *>(this));
+      return _parentItem->_childItems.indexOf(const_cast<TreeItem* >(this));
    }
 
    return 0;
