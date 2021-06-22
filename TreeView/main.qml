@@ -13,11 +13,13 @@ Window {
     TreeView {
         anchors.fill: parent
         model: treeModel
-        color: "steelblue"
 
         selectionEnable: true
         hoverEnabled: true
+
+        color: "steelblue"
         hoverColor: "skyblue"
-        selectedItemColor: "dodgerblue"
+        selectedColor: "dodgerblue"
+        selectedItemColor: "white"
     }
 }

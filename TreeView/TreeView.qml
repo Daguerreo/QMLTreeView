@@ -11,7 +11,8 @@ Flickable {
     property color color: "black"
     property color handleColor: color
     property color hoverColor: "lightgray"
-    property color selectedItemColor: "silver"
+    property color selectedColor: "silver"
+    property color selectedItemColor: color
 
     contentHeight: tree.height
     contentWidth: parent.width
@@ -36,6 +37,7 @@ Flickable {
         color: root.color
         handleColor: root.handleColor
         hoverColor: root.hoverColor
+        selectedColor: root.selectedColor
         selectedItemColor: root.selectedItemColor
 
     }
