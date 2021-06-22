@@ -8,27 +8,12 @@ Window {
     visible: true
     width: 500
     height: 400
-    title: qsTr("Simplified TreeView")
+    title: qsTr("TreeView with TreeModel")
 
-    Row {
+    TreeView {
         anchors.fill: parent
-
-        Rectangle {
-            id: treePart
-
-            width: parent.width
-            height: parent.height
-            border {
-                width: 0
-                color: "gray"
-            }
-            clip: true
-
-            TreeView {
-                anchors.fill: parent
-                model: treeModel
-                color: "#3c85b5"
-            }
-        }
+        model: treeModel
+        color: "#3c85b5"
+        hoverColor: "skyblue"
     }
 }
