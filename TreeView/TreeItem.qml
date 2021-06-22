@@ -158,6 +158,13 @@ Item {
                         value: root.handleColor
                         when: loader.status == Loader.Ready
                     }
+
+                    Binding {
+                        target: loader.item;
+                        property: "hoverColor";
+                        value: root.hoverColor
+                        when: loader.status == Loader.Ready
+                    }
                 }
             }
         }

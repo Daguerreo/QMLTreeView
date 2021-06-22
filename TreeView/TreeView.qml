@@ -6,8 +6,9 @@ Flickable {
     id: root
 
     property var model
-    property string color: "black"
-    property string handleColor: color
+    property color color: "black"
+    property color handleColor: color
+    property color hoverColor: "lightgray"
 
     contentHeight: tree.height
     contentWidth: parent.width
@@ -31,5 +32,6 @@ Flickable {
         itemLeftPadding: 0
         color: root.color
         handleColor: root.handleColor
+        hoverColor: root.hoverColor
     }
 }
