@@ -1,6 +1,6 @@
 # QMLTreeView
 
-This project show different demo implementing a QML Tree View with a C++ Tree Model.
+This project show different demo implementing a QML Tree View with a C++ Tree Model for Qt 5.15.
 
 ## Usage
 
@@ -41,6 +41,7 @@ giving
 
 ### C++ side
 
+
 ```
 int main()
 {
@@ -65,3 +66,36 @@ int main()
 }
 
 ```
+
+# Samples
+
+
+## TreeView
+
+This sample provides the following features:
+- Item selection
+- Item hover
+- Color customization
+
+![](img/treeview.png)
+
+
+## Simplified
+
+This sample show the minimal code to build the TreeView. No features are implemented here.
+
+![](img/simplified.png)
+
+
+## ListView
+
+Since the TreeModel actually is flattened to one column, can be basically used as a ListView
+
+![](img/collapsed.png)
+
+
+
+## Credits
+
+
+[QmlTreeViewExample](https://github.com/Palm1r/QmlTreeViewExample)
