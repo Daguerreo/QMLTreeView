@@ -2,7 +2,7 @@
 
 TreeModel::TreeModel(QObject* parent)
    : QAbstractItemModel(parent),
-     _rootItem{std::make_shared<TreeItem>(QVariantList{})}
+     _rootItem{std::make_shared<TreeItem>(QVariant{})}
 {
 }
 

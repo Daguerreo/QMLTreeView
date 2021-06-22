@@ -9,7 +9,6 @@ class TreeItem
 {
 public:
    explicit TreeItem(const QVariant& data, TreeItem* parent = nullptr);
-   TreeItem(TreeItem* parent, const QVector<TreeItem*>& children);
    ~TreeItem();
 
    TreeItem* parentItem();
@@ -28,7 +27,7 @@ public:
    bool isLeaf() const;
 
 private:
+   QVariant _itemData;
    TreeItem* _parentItem;
    QVector<TreeItem*> _childItems;
-   QVariant _itemData;
 };

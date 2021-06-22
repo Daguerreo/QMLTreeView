@@ -3,12 +3,8 @@
 #include <QQmlContext>
 #include "tree_model.h"
 
-int main(int argc, char *argv[]) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
-   QGuiApplication app(argc, argv);
-
+TreeModel* populateModel()
+{
    auto treeModel = new TreeModel();
    auto root = treeModel->rootItem().get();
    auto parent1 = new TreeItem("Parent1");
@@ -40,6 +36,17 @@ int main(int argc, char *argv[]) {
    treeModel->addItem(child1, grandChild2);
    treeModel->addItem(grandChild1, grateChild1);
    treeModel->addItem(grandChild1, grateChild2);
+
+   return treeModel;
+}
+
+int main(int argc, char *argv[]) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+   QGuiApplication app(argc, argv);
+
+   auto treeModel = populateModel();
 
    QQmlApplicationEngine engine;
    engine.rootContext()->setContextProperty("treeModel", treeModel);

@@ -1,14 +1,10 @@
 #include "tree_item.h"
 
 TreeItem::TreeItem(const QVariant& data, TreeItem* parent)
-   : _parentItem(parent),
-     _itemData(data)
-{}
-
-TreeItem::TreeItem(TreeItem* parent, const QVector<TreeItem*>& children)
-   : _parentItem(parent),
-     _childItems(children)
-{}
+   : _itemData(data),
+     _parentItem(parent)
+{
+}
 
 TreeItem::~TreeItem()
 {
