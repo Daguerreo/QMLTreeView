@@ -9,22 +9,30 @@ Item {
     property var model
     property var parentIndex
     property var childCount
-    property var currentIndex: null
+
+    property var selectedIndex
+    property var hoveredIndex
 
     // layout properties
     property int itemLeftPadding: 0
     property int childLeftPadding: 30
     property color color: "black"
     property color handleColor: color
-    property color hoverColor: "lightgray"
+
+    property bool selectionEnabled: false
+    property color selectedItemColor: "silver"
+
     property bool hoverEnabled: false
+    property color hoverColor: "lightgray"
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
 
     ColumnLayout {
         width: parent.width
-        spacing: 10
+
+        // spacing between children
+        spacing: 6
 
         Repeater {
             model: childCount
@@ -35,7 +43,8 @@ Item {
 
                 Layout.leftMargin: itemLeftPadding
 
-                spacing: 10
+                // space between parent and first children
+                spacing: 6
 
                 QtObject {
                     id: _prop
@@ -44,8 +53,10 @@ Item {
                     property var currentData: root.model.data(currentIndex)
                     property var itemChildCount: root.model.rowCount(currentIndex)
                     property bool expanded: false
+                    property bool selected: false
                     readonly property bool hasChildren: itemChildCount > 0
-                    readonly property bool isCurrentIndex: _prop.currentIndex === root.currentIndex
+                    readonly property bool isSelectedIndex: currentIndex === root.selectedIndex
+                    readonly property bool isHoveredIndex: currentIndex === root.hoveredIndex
 
                     function toggle(){
                         if(_prop.hasChildren) _prop.expanded = !_prop.expanded
@@ -59,13 +70,17 @@ Item {
 
                     width: row.implicitWidth
                     height: row.implicitHeight
-                    spacing: 10
+                    spacing: 0
 
                     Rectangle {
                         id: rowOverlay
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        color: _prop.isCurrentIndex ? hoverColor : "transparent"
+                        color: {
+                            if(root.selectionEnabled && _prop.isSelectedIndex) return root.selectedItemColor
+                            else if(root.hoverEnabled && _prop.isHoveredIndex) return root.hoverColor
+                            else return "transparent"
+                        }
 
                         RowLayout {
                             id: row
@@ -98,37 +113,36 @@ Item {
                             Row {
                                 spacing: 10
 
-                                Rectangle {
-                                    id: squareIndicator
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: 8
-                                    height: 40
-                                    color: root.color
-                                }
-
-
                                 Text {
                                     id: contentData
 
                                     anchors.verticalCenter: parent.verticalCenter
                                     color: root.color
+                                    opacity: {
+                                        root.hoverEnabled && _prop.isHoveredIndex
+                                        root.selectionEnabled && _prop.isSelectedIndex ? 0.7 : 1
+                                    }
                                     font.pixelSize: 20
+                                    verticalAlignment: Text.AlignVCenter
                                     text: _prop.currentData
-
+                                    height: Math.max(implicitHeight, 40)
                                 }
                             }
-
                         }
                         HoverHandler {
                             onHoveredChanged: {
                                 if(root.hoverEnabled){
-                                    if(hovered) root.currentIndex = _prop.currentIndex
-                                    else root.currentIndex = null
+                                    if(hovered) root.hoveredIndex = _prop.currentIndex
+                                    else root.hoveredIndex = null
                                 }
                             }
-
                         }
-                        TapHandler { onDoubleTapped: _prop.toggle() }
+                        TapHandler {
+                            onDoubleTapped: _prop.toggle()
+                            onSingleTapped: {
+                                root.selectedIndex = _prop.currentIndex
+                            }
+                        }
                     }
                 }
 
@@ -167,6 +181,30 @@ Item {
                         target: loader.item;
                         property: "hoverEnabled";
                         value: root.hoverEnabled
+                        when: loader.status == Loader.Ready
+                    }
+                    Binding {
+                        target: loader.item;
+                        property: "selectionEnabled";
+                        value: root.selectionEnabled
+                        when: loader.status == Loader.Ready
+                    }
+                    Binding {
+                        target: loader.item;
+                        property: "selectedIndex";
+                        value: root.selectedIndex
+                        when: loader.status == Loader.Ready
+                    }
+                    Binding {
+                        target: root;
+                        property: "selectedIndex";
+                        value: loader.item.selectedIndex
+                        when: loader.status == Loader.Ready
+                    }
+                    Binding {
+                        target: root;
+                        property: "selectedItemColor";
+                        value: root.selectedItemColor
                         when: loader.status == Loader.Ready
                     }
                 }

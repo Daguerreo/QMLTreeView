@@ -6,10 +6,12 @@ Flickable {
     id: root
 
     property var model
+    property alias selectionEnable: tree.selectionEnabled
+    property alias hoverEnabled: tree.hoverEnabled
     property color color: "black"
     property color handleColor: color
     property color hoverColor: "lightgray"
-    property alias hoverEnabled: tree.hoverEnabled
+    property color selectedItemColor: "silver"
 
     contentHeight: tree.height
     contentWidth: parent.width
@@ -34,5 +36,7 @@ Flickable {
         color: root.color
         handleColor: root.handleColor
         hoverColor: root.hoverColor
+        selectedItemColor: root.selectedItemColor
+
     }
 }
