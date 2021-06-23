@@ -1,6 +1,7 @@
 # QMLTreeView
 
-This project show different demo implementing a QML Tree View with a C++ Tree Model for Qt 5.15.
+This project show different demo implementing a QML Tree View with a C++ Tree Model for Qt 5.15 and QuickControls 2.
+
 
 ## Usage
 
@@ -33,13 +34,15 @@ Color styling can be customize as follow:
         hoverColor: "skyblue"
         selectedColor: "dodgerblue"
         selectedItemColor: "white"
+        indicatorStyle: TreeView.Indicator.Chevron
     }
 ```
 giving
 
 ![](img/treeview.png)
 
-### C++ side
+
+## C++
 
 
 ```
