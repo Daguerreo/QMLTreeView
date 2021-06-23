@@ -22,6 +22,7 @@ Window {
         hoverColor: "skyblue"
         selectedColor: "dodgerblue"
         selectedItemColor: "white"
+        indicatorStyle: TreeView.Indicator.Chevron
 
         onCurrentIndexChanged: console.log("current index is (" + currentIndex.row + "," + currentIndex.column + ")")
         onCurrentDataChanged: console.log("current data is " + currentData)

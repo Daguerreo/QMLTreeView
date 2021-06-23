@@ -14,6 +14,16 @@ Flickable {
     property alias selectionEnable: tree.selectionEnabled
     property alias hoverEnabled: tree.hoverEnabled
 
+    enum Indicator {
+        Triangle,
+        TriangleSmall,
+        TriangleOutline,
+        TriangleSmallOutline,
+        Chevron,
+        Arrow
+    }
+
+    property int indicatorStyle: TreeView.Indicator.Triangle
     property color color: "black"
     property color handleColor: color
     property color hoverColor: "lightgray"
@@ -47,5 +57,18 @@ Flickable {
         hoverColor: root.hoverColor
         selectedColor: root.selectedColor
         selectedItemColor: root.selectedItemColor
+        defaultIndicator: indicatorToString(indicatorStyle)
+    }
+
+    function indicatorToString(indicator){
+        switch (indicator){
+        case TreeView.Indicator.Triangle: return "▶";
+        case TreeView.Indicator.TriangleSmall: return "►";
+        case TreeView.Indicator.TriangleOutline: return "▷";
+        case TreeView.Indicator.TriangleSmallOutline: return "⊳";
+        case TreeView.Indicator.Chevron: return "❱";
+        case TreeView.Indicator.Arrow: return "➤";
+        default: return "▶";
+        }
     }
 }

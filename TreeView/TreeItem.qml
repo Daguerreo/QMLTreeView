@@ -18,6 +18,7 @@ Item {
     property int childLeftPadding: 30
     property color color: "black"
     property color handleColor: color
+    property string defaultIndicator: "▶"
 
     property bool selectionEnabled: false
     property color selectedColor: "silver"
@@ -41,9 +42,9 @@ Item {
         opacity: currentRow.hasChildren
         color: "transparent"
 
-        Label {
+        Text {
             anchors.centerIn: parent
-            text: "❱"
+            text: defaultIndicator
             antialiasing: true
             color: currentRow.isSelectedIndex ? root.selectedItemColor : root.handleColor
         }
@@ -97,9 +98,7 @@ Item {
                     readonly property bool isHoveredIndex: root.hoverEnabled && currentIndex === root.hoveredIndex
                     readonly property bool isSelectedAndHoveredIndex: hoverEnabled && selectionEnabled && isHoveredIndex && isSelectedIndex
 
-                    function toggle(){
-                        if(_prop.hasChildren) _prop.expanded = !_prop.expanded
-                    }
+                    function toggle(){ if(_prop.hasChildren) _prop.expanded = !_prop.expanded }
                 }
 
                 ColumnLayout {
