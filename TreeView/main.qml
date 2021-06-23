@@ -11,6 +11,7 @@ Window {
     title: qsTr("TreeView with TreeModel")
 
     TreeView {
+        id: treeview
         anchors.fill: parent
         model: treeModel
 

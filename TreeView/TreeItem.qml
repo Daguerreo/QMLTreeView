@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 Item {
@@ -28,6 +28,43 @@ Item {
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
+
+    // Components
+
+    property Component indicator: Rectangle {
+        id: indicator
+
+        implicitWidth: 20
+        implicitHeight: 20
+        Layout.leftMargin: parent.spacing
+        rotation: currentRow.expanded ? 90 : 0
+        opacity: currentRow.hasChildren
+        color: "transparent"
+
+        Label {
+            anchors.centerIn: parent
+            text: "❱"
+            antialiasing: true
+            color: currentRow.isSelectedIndex ? root.selectedItemColor : root.handleColor
+        }
+
+        TapHandler { onSingleTapped: currentRow.toggle() }
+    }
+
+    property Component contentItem: Row {
+        spacing: 10
+
+        Text {
+            id: contentData
+
+            anchors.verticalCenter: parent.verticalCenter
+            color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            text: currentRow.currentData
+            height: Math.max(implicitHeight, 40)
+        }
+    }
 
     ColumnLayout {
         width: parent.width
@@ -91,41 +128,21 @@ Item {
 
                             spacing: 10
 
-                            // Indicator
-                            Rectangle {
-                                id: indicator
-
-                                implicitWidth: 20
-                                implicitHeight: 20
+                            // indicator
+                            Loader {
+                                id: indicatorLoader
+                                sourceComponent: indicator
                                 Layout.leftMargin: parent.spacing
-                                rotation: _prop.expanded ? 90 : 0
-                                opacity: _prop.hasChildren
-                                color: "transparent"
 
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: "❱"
-                                    antialiasing: true
-                                    color: _prop.isSelectedIndex ? root.selectedItemColor : root.handleColor
-                                }
-
-                                TapHandler { onSingleTapped:  _prop.toggle() }
+                                property QtObject currentRow: _prop
                             }
 
                             //  Content
-                            Row {
-                                spacing: 10
+                            Loader {
+                                id: contentItemLoader
+                                sourceComponent: contentItem
 
-                                Text {
-                                    id: contentData
-
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    color: _prop.isSelectedIndex ? root.selectedItemColor : root.color
-                                    font.pixelSize: 20
-                                    verticalAlignment: Text.AlignVCenter
-                                    text: _prop.currentData
-                                    height: Math.max(implicitHeight, 40)
-                                }
+                                property QtObject currentRow: _prop
                             }
                         }
                         HoverHandler {
@@ -145,6 +162,7 @@ Item {
                     }
                 }
 
+                // loader to populate the children row for each node
                 Loader {
                     id: loader
 
@@ -158,60 +176,18 @@ Item {
                         item.itemLeftPadding = root.childLeftPadding
                     }
 
-                    Binding {
-                        target: loader.item;
-                        property: "color";
-                        value: root.color
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: loader.item;
-                        property: "handleColor";
-                        value: root.handleColor
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: loader.item;
-                        property: "hoverColor";
-                        value: root.hoverColor
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: loader.item;
-                        property: "hoverEnabled";
-                        value: root.hoverEnabled
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: loader.item;
-                        property: "selectedColor";
-                        value: root.selectedColor
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: loader.item;
-                        property: "selectedItemColor";
-                        value: root.selectedItemColor
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: loader.item;
-                        property: "selectionEnabled";
-                        value: root.selectionEnabled
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: loader.item;
-                        property: "selectedIndex";
-                        value: root.selectedIndex
-                        when: loader.status == Loader.Ready
-                    }
-                    Binding {
-                        target: root;
-                        property: "selectedIndex";
-                        value: loader.item.selectedIndex
-                        when: loader.status == Loader.Ready
-                    }
+                    Binding { target: loader.item; property: "indicator"; value: root.indicator; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "contentItem"; value: root.contentItem; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "selectedIndex"; value: root.selectedIndex; when: loader.status == Loader.Ready }
+                    Binding { target: root; property: "selectedIndex"; value: loader.item.selectedIndex; when: loader.status == Loader.Ready }
+
+                    Binding { target: loader.item; property: "color"; value: root.color; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "handleColor"; value: root.handleColor; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "hoverEnabled"; value: root.hoverEnabled; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "hoverColor"; value: root.hoverColor; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "selectionEnabled"; value: root.selectionEnabled; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "selectedColor"; value: root.selectedColor; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "selectedItemColor"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
                 }
             }
         }
