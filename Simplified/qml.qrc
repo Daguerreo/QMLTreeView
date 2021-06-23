@@ -2,6 +2,5 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>TreeItem.qml</file>
-        <file>ModelItem.qml</file>
     </qresource>
 </RCC>

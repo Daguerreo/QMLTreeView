@@ -1,6 +1,6 @@
 import QtQuick 2.15
 
-Row {
+Column {
     id: root
 
     property alias text: contentData.text
@@ -8,19 +8,38 @@ Row {
 
     spacing: 10
 
-    Rectangle {
-        id: squareIndicator
-        anchors.verticalCenter: parent.verticalCenter
-        width: 20
-        height: 20
-        color: root.color
+    Row {
+        spacing: 10
+
+        Rectangle {
+            id: squareIndicator
+            anchors.verticalCenter: parent.verticalCenter
+            width: 20
+            height: 20
+            color: root.color
+        }
+
+        Text {
+            id: contentData
+
+            anchors.verticalCenter: parent.verticalCenter
+            color: root.color
+            font.pixelSize: 20
+        }
     }
 
-    Text {
-        id: contentData
+    Rectangle {
+        id: rowSeparator
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
 
-        anchors.verticalCenter: parent.verticalCenter
-        color: root.color
-        font.pixelSize: 20
+        width: parent.width
+        height: 1
+        color: "gray"
+        opacity: 0.5
     }
 }
+
+

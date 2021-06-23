@@ -82,10 +82,19 @@ Item {
                         }
 
                         //  Content
-                        ModelItem {
-                            text: _prop.currentData
-                            color: root.color
+                        Row {
+                            spacing: 10
+
+                            Text {
+                                id: contentData
+
+                                anchors.verticalCenter: parent.verticalCenter
+                                color: root.color
+                                text: _prop.currentData
+                                font.pixelSize: 20
+                            }
                         }
+
 
                         TapHandler {
                             onDoubleTapped: _prop.toggle()

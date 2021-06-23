@@ -22,26 +22,9 @@ Item {
         ScrollBar.vertical: ScrollBar {}
 
         model: listItemModel
-        delegate: Column {
+        delegate: ModelItem {
             width: parent.width
-            spacing: 10
-
-            ModelItem {
-                text: name
-                color: root.color
-            }
-
-            Rectangle {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-
-                width: parent.width
-                height: 1
-                color: "gray"
-                opacity: 0.5
-            }
+            text: model.name
         }
     }
 

@@ -10,30 +10,11 @@ Window {
     height: 480
     title: qsTr("TreeModel collapsed in a ListView")
 
-    Rectangle {
-        id: listPart
+    CollapsedTreeView {
+        anchors.fill: parent
 
-        width: parent.width
-        height: parent.height
-        border {
-            width: 1
-            color: "gray"
-        }
-        clip: true
-
-        CollapsedTreeView {
-            anchors {
-                top: parent.top
-                left: parent.left
-                leftMargin: 5
-                topMargin: 5
-            }
-
-            model: treeModel
-
-            color: "#1C1C1C"
-        }
+        model: treeModel
+        color: "#1F1F1F"
     }
-
 
 }
