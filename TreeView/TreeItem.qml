@@ -10,8 +10,8 @@ Item {
     property var parentIndex
     property var childCount
 
-    property var selectedIndex
-    property var hoveredIndex
+    property var selectedIndex: null
+    property var hoveredIndex: null
 
     // layout properties
     property int itemLeftPadding: 0

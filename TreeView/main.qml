@@ -22,5 +22,8 @@ Window {
         hoverColor: "skyblue"
         selectedColor: "dodgerblue"
         selectedItemColor: "white"
+
+        onCurrentIndexChanged: console.log("current index is (" + currentIndex.row + "," + currentIndex.column + ")")
+        onCurrentDataChanged: console.log("current data is " + currentData)
     }
 }

@@ -6,6 +6,8 @@ Flickable {
     id: root
 
     property var model
+    readonly property alias currentIndex: tree.selectedIndex
+    property var currentData
 
     property alias indicator: tree.indicator
     property alias contentItem: tree.contentItem
@@ -17,6 +19,8 @@ Flickable {
     property color hoverColor: "lightgray"
     property color selectedColor: "silver"
     property color selectedItemColor: color
+
+    Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
 
     contentHeight: tree.height
     contentWidth: parent.width
@@ -43,6 +47,5 @@ Flickable {
         hoverColor: root.hoverColor
         selectedColor: root.selectedColor
         selectedItemColor: root.selectedItemColor
-
     }
 }
