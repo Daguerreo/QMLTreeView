@@ -11,6 +11,7 @@ Flickable {
 
     property alias indicator: tree.indicator
     property alias contentItem: tree.contentItem
+    property alias highlight: tree.highlight
     property alias selectionEnable: tree.selectionEnabled
     property alias hoverEnabled: tree.hoverEnabled
 

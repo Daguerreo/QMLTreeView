@@ -67,6 +67,18 @@ Item {
         }
     }
 
+    property Component highlight: Rectangle {
+        width: parent.width
+        height: parent.height
+        color: {
+            if(currentRow.isSelectedIndex) return root.selectedColor
+            else if(currentRow.isHoveredIndex) return root.hoverColor
+            else return "transparent"
+        }
+    }
+
+    // Body
+
     ColumnLayout {
         width: parent.width
 
@@ -101,56 +113,38 @@ Item {
                     function toggle(){ if(_prop.hasChildren) _prop.expanded = !_prop.expanded }
                 }
 
-                ColumnLayout {
+                Item {
                     id: column
 
                     Layout.fillWidth: true
 
                     width: row.implicitWidth
                     height: row.implicitHeight
-                    spacing: 0
+                    clip: true
 
-                    Rectangle {
-                        id: rowOverlay
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        color: {
-                            if(_prop.isSelectedIndex) return root.selectedColor
-                            else if(_prop.isHoveredIndex) return root.hoverColor
-                            else return "transparent"
+                    RowLayout {
+                        id: row
+                        anchors.fill: parent
+                        z: 1
+
+                        spacing: 10
+
+                        // indicator
+                        Loader {
+                            id: indicatorLoader
+                            sourceComponent: indicator
+                            Layout.leftMargin: parent.spacing
+
+                            property QtObject currentRow: _prop
                         }
 
-                        RowLayout {
-                            id: row
-
+                        //  Content
+                        Loader {
+                            id: contentItemLoader
+                            sourceComponent: contentItem
                             Layout.fillWidth: true
 
-                            spacing: 10
-
-                            // indicator
-                            Loader {
-                                id: indicatorLoader
-                                sourceComponent: indicator
-                                Layout.leftMargin: parent.spacing
-
-                                property QtObject currentRow: _prop
-                            }
-
-                            //  Content
-                            Loader {
-                                id: contentItemLoader
-                                sourceComponent: contentItem
-
-                                property QtObject currentRow: _prop
-                            }
-                        }
-                        HoverHandler {
-                            onHoveredChanged: {
-                                if(root.hoverEnabled){
-                                    if(hovered) root.hoveredIndex = _prop.currentIndex
-                                    else root.hoveredIndex = null
-                                }
-                            }
+                            property QtObject currentRow: _prop
                         }
                         TapHandler {
                             onDoubleTapped: _prop.toggle()
@@ -159,6 +153,26 @@ Item {
                             }
                         }
                     }
+
+                    Loader {
+                        id: highlightLoader
+                        sourceComponent: highlight
+                        width: row.width
+                        height: parent.height
+                        z: 0
+
+                        property QtObject currentRow: _prop
+
+                        HoverHandler {
+                            onHoveredChanged: {
+                                if(root.hoverEnabled){
+                                    if(hovered) root.hoveredIndex = _prop.currentIndex
+                                    else root.hoveredIndex = null
+                                }
+                            }
+                        }
+                    }
+
                 }
 
                 // loader to populate the children row for each node
