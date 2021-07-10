@@ -1,19 +1,26 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import QtQml 2.15
 
 Flickable {
     id: root
 
     property var model
     readonly property alias currentIndex: tree.selectedIndex
+    readonly property alias currentItem: tree.currentItem
     property var currentData
 
     property alias indicator: tree.indicator
     property alias contentItem: tree.contentItem
-    property alias highlight: tree.highlight
     property alias selectionEnable: tree.selectionEnabled
     property alias hoverEnabled: tree.hoverEnabled
+
+    property color color: "black"
+    property color handleColor: color
+    property color hoverColor: "lightgray"
+    property color selectedColor: "silver"
+    property color selectedItemColor: color
 
     enum Indicator {
         Triangle,
@@ -25,18 +32,17 @@ Flickable {
     }
 
     property int indicatorStyle: TreeView.Indicator.Triangle
-    property color color: "black"
-    property color handleColor: color
-    property color hoverColor: "lightgray"
-    property color selectedColor: "silver"
-    property color selectedItemColor: color
 
-    Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
+    property Component highlight: Rectangle {
+        color: root.selectedColor
+    }
 
     contentHeight: tree.height
     contentWidth: parent.width
     boundsBehavior: Flickable.StopAtBounds
     ScrollBar.vertical: ScrollBar {}
+
+    Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
 
     TreeItem {
         id: tree
@@ -55,10 +61,26 @@ Flickable {
         itemLeftPadding: 0
         color: root.color
         handleColor: root.handleColor
+        // @disable-check M16
         hoverColor: root.hoverColor
+        // @disable-check M16
         selectedColor: root.selectedColor
+        // @disable-check M16
         selectedItemColor: root.selectedItemColor
+        // @disable-check M16
         defaultIndicator: indicatorToString(indicatorStyle)
+        z: 1
+    }
+
+    Loader {
+        id: highlightLoader
+        sourceComponent: highlight
+
+        width: root.width
+        height: 40
+        y: tree.currentItem.mapToItem(tree, 0 ,0).y + tree.anchors.topMargin
+        z: 0
+        visible: root.currentItem !== null
     }
 
     function indicatorToString(indicator){

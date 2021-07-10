@@ -10,6 +10,7 @@ Item {
     property var parentIndex
     property var childCount
 
+    property var currentItem: null
     property var selectedIndex: null
     property var hoveredIndex: null
 
@@ -67,14 +68,10 @@ Item {
         }
     }
 
-    property Component highlight: Rectangle {
+    property Component hoverComponent: Rectangle {
         width: parent.width
         height: parent.height
-        color: {
-            if(currentRow.isSelectedIndex) return root.selectedColor
-            else if(currentRow.isHoveredIndex) return root.hoverColor
-            else return "transparent"
-        }
+        color: currentRow.isHoveredIndex && !currentRow.isSelectedIndex ? root.hoverColor : "transparent"
     }
 
     // Body
@@ -86,6 +83,7 @@ Item {
         spacing: 6
 
         Repeater {
+            id: repeater
             model: childCount
             Layout.fillWidth: true
 
@@ -102,6 +100,7 @@ Item {
 
                     property var currentIndex: root.model.index(index, 0, parentIndex)
                     property var currentData: root.model.data(currentIndex)
+                    property Item currentItem: repeater.itemAt(index)
                     property var itemChildCount: root.model.rowCount(currentIndex)
                     property bool expanded: false
                     property bool selected: false
@@ -149,14 +148,15 @@ Item {
                         TapHandler {
                             onDoubleTapped: _prop.toggle()
                             onSingleTapped: {
+                                root.currentItem = _prop.currentItem
                                 root.selectedIndex = _prop.currentIndex
                             }
                         }
                     }
 
                     Loader {
-                        id: highlightLoader
-                        sourceComponent: highlight
+                        id: hoverLoader
+                        sourceComponent: hoverComponent
                         width: row.width
                         height: parent.height
                         z: 0
@@ -191,7 +191,10 @@ Item {
 
                     Binding { target: loader.item; property: "indicator"; value: root.indicator; when: loader.status == Loader.Ready }
                     Binding { target: loader.item; property: "contentItem"; value: root.contentItem; when: loader.status == Loader.Ready }
+
+                    Binding { target: loader.item; property: "currentItem"; value: root.currentItem; when: loader.status == Loader.Ready }
                     Binding { target: loader.item; property: "selectedIndex"; value: root.selectedIndex; when: loader.status == Loader.Ready }
+                    Binding { target: root; property: "currentItem"; value: loader.item.currentItem; when: loader.status == Loader.Ready }
                     Binding { target: root; property: "selectedIndex"; value: loader.item.selectedIndex; when: loader.status == Loader.Ready }
 
                     Binding { target: loader.item; property: "color"; value: root.color; when: loader.status == Loader.Ready }
