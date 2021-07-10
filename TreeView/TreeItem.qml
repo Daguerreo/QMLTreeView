@@ -53,19 +53,15 @@ Item {
         TapHandler { onSingleTapped: currentRow.toggle() }
     }
 
-    property Component contentItem: Row {
-        spacing: 10
+    property Component contentItem: Text {
+        id: contentData
 
-        Text {
-            id: contentData
+        anchors.verticalCenter: parent.verticalCenter
+        verticalAlignment: Text.AlignVCenter
 
-            anchors.verticalCenter: parent.verticalCenter
-            color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
-            font.pixelSize: 20
-            verticalAlignment: Text.AlignVCenter
-            text: currentRow.currentData
-            height: Math.max(implicitHeight, 40)
-        }
+        color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
+        text: currentRow.currentData
+        font.pixelSize: 20
     }
 
     property Component hoverComponent: Rectangle {

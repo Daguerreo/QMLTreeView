@@ -77,10 +77,10 @@ Flickable {
         sourceComponent: highlight
 
         width: root.width
-        height: 40
-        y: tree.currentItem.mapToItem(tree, 0 ,0).y + tree.anchors.topMargin
+        height: 24
+        y: tree.currentItem ? tree.currentItem.mapToItem(tree, 0 ,0).y + tree.anchors.topMargin : 0
         z: 0
-        visible: root.currentItem !== null
+        active: tree.currentItem !== null
     }
 
     function indicatorToString(indicator){
