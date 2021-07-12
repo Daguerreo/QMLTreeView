@@ -30,6 +30,11 @@ Item {
     property color selectedItemColor: color
 
     property string defaultIndicator: "▶"
+    property FontMetrics fontMetrics: FontMetrics {
+        font.pixelSize: 20
+    }
+    property alias font: root.fontMetrics.font
+
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -49,6 +54,7 @@ Item {
         Text {
             anchors.centerIn: parent
             text: defaultIndicator
+            font: root.font
             antialiasing: true
             color: currentRow.isSelectedIndex ? root.selectedItemColor : root.handleColor
         }
@@ -64,7 +70,7 @@ Item {
 
         color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
         text: currentRow.currentData
-        font.pixelSize: 20
+        font: root.font
     }
 
     property Component hoverComponent: Rectangle {

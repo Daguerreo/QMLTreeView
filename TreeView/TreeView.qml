@@ -36,7 +36,8 @@ Flickable {
     }
 
     property int indicatorStyle: TreeView.Indicator.Triangle
-
+    property alias fontMetrics: tree.fontMetrics
+    property alias font: tree.font
 
     contentHeight: tree.height
     contentWidth: parent.width
@@ -44,6 +45,11 @@ Flickable {
     ScrollBar.vertical: ScrollBar {}
 
     Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
+
+    Text {
+        id: textSingleton
+        visible: false
+    }
 
     TreeItem {
         id: tree
