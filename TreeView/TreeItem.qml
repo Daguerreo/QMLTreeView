@@ -6,6 +6,7 @@ Item {
     id: root
 
     // model properties
+
     property var model
     property var parentIndex
     property var childCount
@@ -15,18 +16,20 @@ Item {
     property var hoveredIndex: null
 
     // layout properties
-    property int itemLeftPadding: 0
-    property int childLeftPadding: 30
-    property color color: "black"
-    property color handleColor: color
-    property string defaultIndicator: "▶"
 
     property bool selectionEnabled: false
+    property bool hoverEnabled: false
+
+    property int itemLeftPadding: 0
+    property int childLeftPadding: 30
+
+    property color color: "black"
+    property color handleColor: color
+    property color hoverColor: "lightgray"
     property color selectedColor: "silver"
     property color selectedItemColor: color
 
-    property bool hoverEnabled: false
-    property color hoverColor: "lightgray"
+    property string defaultIndicator: "▶"
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -141,6 +144,7 @@ Item {
 
                             property QtObject currentRow: _prop
                         }
+
                         TapHandler {
                             onDoubleTapped: _prop.toggle()
                             onSingleTapped: {

@@ -13,14 +13,18 @@ Flickable {
 
     property alias indicator: tree.indicator
     property alias contentItem: tree.contentItem
+    property Component highlight: Rectangle {
+        color: root.selectedColor
+    }
+
     property alias selectionEnable: tree.selectionEnabled
     property alias hoverEnabled: tree.hoverEnabled
 
-    property color color: "black"
-    property color handleColor: color
-    property color hoverColor: "lightgray"
-    property color selectedColor: "silver"
-    property color selectedItemColor: color
+    property alias color: tree.color
+    property alias handleColor: tree.handleColor
+    property alias hoverColor: tree.hoverColor
+    property alias selectedColor: tree.selectedColor
+    property alias selectedItemColor: tree.selectedItemColor
 
     enum Indicator {
         Triangle,
@@ -33,9 +37,6 @@ Flickable {
 
     property int indicatorStyle: TreeView.Indicator.Triangle
 
-    property Component highlight: Rectangle {
-        color: root.selectedColor
-    }
 
     contentHeight: tree.height
     contentWidth: parent.width
