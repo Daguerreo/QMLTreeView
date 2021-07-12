@@ -88,9 +88,15 @@ Flickable {
 
         width: root.width
         height: root.rowHeight
-        y: tree.currentItem ? tree.currentItem.mapToItem(tree, 0 ,0).y + tree.anchors.topMargin : 0
         z: 0
         visible: tree.currentItem !== null
+
+        Binding {
+            target: highlightLoader.item
+            property: "y"
+            value: tree.currentItem ? tree.currentItem.mapToItem(tree, 0 ,0).y + tree.anchors.topMargin : 0
+            when: highlightLoader.status === Loader.Ready
+        }
     }
 
     function indicatorToString(indicator){
