@@ -38,6 +38,9 @@ Flickable {
     property int indicatorStyle: TreeView.Indicator.Triangle
     property alias fontMetrics: tree.fontMetrics
     property alias font: tree.font
+    property alias rowPadding: tree.childLeftPadding
+    property alias rowHeight: tree.rowHeight
+
 
     contentHeight: tree.height
     contentWidth: parent.width
@@ -84,10 +87,10 @@ Flickable {
         sourceComponent: highlight
 
         width: root.width
-        height: 24
+        height: root.rowHeight
         y: tree.currentItem ? tree.currentItem.mapToItem(tree, 0 ,0).y + tree.anchors.topMargin : 0
         z: 0
-        active: tree.currentItem !== null
+        visible: tree.currentItem !== null
     }
 
     function indicatorToString(indicator){

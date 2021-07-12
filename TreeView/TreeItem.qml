@@ -22,6 +22,7 @@ Item {
 
     property int itemLeftPadding: 0
     property int childLeftPadding: 30
+    property int rowHeight: 24
 
     property color color: "black"
     property color handleColor: color
@@ -128,7 +129,9 @@ Item {
 
                     RowLayout {
                         id: row
+
                         anchors.fill: parent
+                        height: root.rowHeight
                         z: 1
 
                         spacing: 10
