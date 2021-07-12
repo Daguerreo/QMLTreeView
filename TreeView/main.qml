@@ -6,7 +6,7 @@ Window {
     id: root
 
     visible: true
-    width: 500
+    width: 800
     height: 400
     title: qsTr("TreeView with TreeModel")
 
@@ -14,35 +14,42 @@ Window {
         anchors.fill: parent
 
         Rectangle {
-            width: parent.width / 2
+            width: parent.width / 3
             height: parent.height
             border.width: 1
             border.color: "black"
             clip: true
 
+            // Default TreeView
+
             TreeView {
                 id: defaultTreeView
+
                 anchors.fill: parent
                 anchors.margins: 1
-                model: treeModel
 
+                model: treeModel
                 selectionEnable: true
                 hoverEnabled: true
             }
         }
 
         Rectangle {
-            width: parent.width / 2
+            width: parent.width / 3
             height: parent.height
             border.width: 1
             border.color: "black"
             clip: true
 
-            TreeView {
-                id: treeview
-                anchors.fill: parent
-                model: treeModel
+            // Styled TreeView
 
+            TreeView {
+                id: styledTreeView
+
+                anchors.fill: parent
+                anchors.margins: 1
+
+                model: treeModel
                 selectionEnable: true
                 hoverEnabled: true
 
@@ -55,6 +62,42 @@ Window {
                 onCurrentIndexChanged: console.log("current index is (" + currentIndex.row + "," + currentIndex.column + ")")
                 onCurrentDataChanged: console.log("current data is " + currentData)
                 onCurrentItemChanged: console.log("current item is " + currentItem)
+            }
+        }
+
+        Rectangle {
+            width: parent.width / 3
+            height: parent.height
+            border.width: 1
+            border.color: "black"
+            clip: true
+
+            // TreeView with custom delegate
+
+            TreeView {
+                id: delegateTreeView
+                anchors.fill: parent
+                anchors.margins: 1
+
+                model: treeModel
+                selectionEnable: true
+
+                highlight: Item {
+                    Rectangle {
+                        color: "pink"
+                        width: parent.width * 0.9
+                        height: parent.height
+                        anchors.left: parent.left
+                        radius: 60
+                    }
+                    Rectangle {
+                        color: "pink"
+                        width: parent.width * 0.2
+                        height: parent.height
+                        anchors.right: parent.right
+                        radius: 60
+                    }
+                }
             }
         }
     }
