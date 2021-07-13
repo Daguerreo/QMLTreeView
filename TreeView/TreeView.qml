@@ -49,11 +49,6 @@ Flickable {
 
     Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
 
-    Text {
-        id: textSingleton
-        visible: false
-    }
-
     TreeItem {
         id: tree
 
