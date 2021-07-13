@@ -5,5 +5,4 @@ DISTFILES += \
 
 SUBDIRS += \
    TreeView \
-   Simplified \
    ListView
