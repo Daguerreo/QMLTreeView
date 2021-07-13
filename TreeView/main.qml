@@ -29,6 +29,9 @@ Window {
                 anchors.margins: 1
 
                 model: treeModel
+
+                selectionEnabled: true
+                hoverEnabled: true
             }
         }
 
@@ -56,7 +59,11 @@ Window {
                 hoverColor: "skyblue"
                 selectedColor: "cornflowerblue"
                 selectedItemColor: "white"
-                indicatorStyle: TreeView.Indicator.Chevron
+                handleStyle: TreeView.Handle.Chevron
+                rowHeight: 40
+                rowPadding: 30
+                rowSpacing: 12
+                font.pixelSize: 24
 
                 onCurrentIndexChanged: console.log("current index is (" + currentIndex.row + "," + currentIndex.column + ")")
                 onCurrentDataChanged: console.log("current data is " + currentData)
@@ -101,18 +108,23 @@ Window {
                     }
                 }
 
-                indicator: Rectangle {
-                    width: 10
-                    height: 2
-                    color: "black"
-                    visible: currentRow.hasChildren
-
+                handle: Item {
+                    width: 20
+                    height: 20
                     Rectangle {
                         anchors.centerIn: parent
-                        width: parent.height
-                        height: parent.width
-                        color: parent.color
-                        visible: parent.visible && !currentRow.expanded
+                        width: 10
+                        height: 2
+                        color: "black"
+                        visible: currentRow.hasChildren
+
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: parent.height
+                            height: parent.width
+                            color: parent.color
+                            visible: parent.visible && !currentRow.expanded
+                        }
                     }
                 }
 
@@ -131,6 +143,8 @@ Window {
                         anchors.right: parent.right
                         radius: 60
                     }
+
+                    Behavior on y { NumberAnimation { duration: 150 }}
                 }
             }
         }
