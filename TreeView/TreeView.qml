@@ -52,13 +52,6 @@ Flickable {
     TreeViewItem {
         id: tree
 
-        anchors {
-            top: parent.top
-            left: parent.left
-            leftMargin: 5
-            topMargin: 5
-        }
-
         model: root.model
         parentIndex: model.rootIndex()
         childCount: model.rowCount(parentIndex)
@@ -66,13 +59,9 @@ Flickable {
         itemLeftPadding: 0
         color: root.color
         handleColor: root.handleColor
-        // @disable-check M16
         hoverColor: root.hoverColor
-        // @disable-check M16
         selectedColor: root.selectedColor
-        // @disable-check M16
         selectedItemColor: root.selectedItemColor
-        // @disable-check M16
         defaultIndicator: indicatorToString(indicatorStyle)
         z: 1
     }

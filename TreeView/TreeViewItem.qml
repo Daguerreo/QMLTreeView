@@ -59,8 +59,6 @@ Item {
             antialiasing: true
             color: currentRow.isSelectedIndex ? root.selectedItemColor : root.handleColor
         }
-
-        TapHandler { onSingleTapped: currentRow.toggle() }
     }
 
     property Component contentItem: Text {
@@ -124,14 +122,13 @@ Item {
                     Layout.fillWidth: true
 
                     width: row.implicitWidth
-                    height: row.implicitHeight
+                    height: Math.max(row.implicitHeight, root.rowHeight)
                     clip: true
 
                     RowLayout {
                         id: row
 
                         anchors.fill: parent
-                        height: root.rowHeight
                         z: 1
 
                         spacing: 10
@@ -143,6 +140,8 @@ Item {
                             Layout.leftMargin: parent.spacing
 
                             property QtObject currentRow: _prop
+
+                            TapHandler { onSingleTapped: _prop.toggle() }
                         }
 
                         //  Content
