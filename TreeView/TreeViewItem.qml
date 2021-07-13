@@ -83,9 +83,7 @@ Item {
 
     ColumnLayout {
         width: parent.width
-
-        // spacing between children
-        spacing: 6
+        spacing: 0
 
         Repeater {
             id: repeater
@@ -96,9 +94,7 @@ Item {
                 id: itemColumn
 
                 Layout.leftMargin: itemLeftPadding
-
-                // space between parent and first children
-                spacing: root.rowSpacing
+                spacing: 0
 
                 QtObject {
                     id: _prop
@@ -175,8 +171,11 @@ Item {
                         HoverHandler {
                             onHoveredChanged: {
                                 if(root.hoverEnabled){
-                                    if(hovered) root.hoveredIndex = _prop.currentIndex
-                                    else root.hoveredIndex = null
+                                    console.log(hovered + " " + root.hoveredIndex + " " + _prop.currentIndex)
+                                    if(hovered && root.hoveredIndex !== _prop.currentIndex)
+                                        root.hoveredIndex = _prop.currentIndex
+                                    if(!hovered && root.hoveredIndex === _prop.currentIndex)
+                                        root.hoveredIndex = null
                                 }
                             }
                         }
