@@ -121,7 +121,6 @@ Item {
 
                     width: row.implicitWidth
                     height: Math.max(row.implicitHeight, root.rowHeight)
-                    clip: true
 
                     RowLayout {
                         id: row
@@ -145,6 +144,7 @@ Item {
                         //  Content
                         Loader {
                             id: contentItemLoader
+
                             sourceComponent: contentItem
                             Layout.fillWidth: true
 
@@ -162,17 +162,19 @@ Item {
 
                     Loader {
                         id: hoverLoader
+
                         sourceComponent: hoverComponent
-                        width: row.width
+                        width: row.width + (1 + _prop.depth * rowPadding)
                         height: parent.height
+                        x: -(_prop.depth * rowPadding)
                         z: 0
+                        clip: false
 
                         property QtObject currentRow: _prop
 
                         HoverHandler {
                             onHoveredChanged: {
                                 if(root.hoverEnabled){
-                                    console.log(hovered + " " + root.hoveredIndex + " " + _prop.currentIndex)
                                     if(hovered && root.hoveredIndex !== _prop.currentIndex)
                                         root.hoveredIndex = _prop.currentIndex
                                     if(!hovered && root.hoveredIndex === _prop.currentIndex)
