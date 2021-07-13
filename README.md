@@ -1,7 +1,8 @@
 # QMLTreeView
 
-This project provides a QML Tree View with a C++ Tree Model for Qt 5.15 and QuickControls 2.
-the project is still in beta, so breaking change can happen and backward compatibility is still not guaranteed.
+This project provides a **QML Tree View** with a **C++ Tree Model** for **Qt 5.15** and **QuickControls 2**.
+
+The project is still in beta, so breaking change can happen and backward compatibility is still not guaranteed.
 
 ## Features
  - QML Tree View
@@ -10,6 +11,7 @@ the project is still in beta, so breaking change can happen and backward compati
  - Item hovering
  - Customizable layout (color, font, positioning)
  - Delegates to fully customize part of the TreeView
+
 
 
 # Usage
@@ -39,6 +41,7 @@ int main()
 
    return app.exec();
 }
+```
 
 ## QML
 
@@ -83,7 +86,7 @@ Hovering and selection can be activated enabling the respective properties
 
 ## Styling
 
-TreeView support color styling for each part. Positioning can be customized with the properties rowHeight, rowPadding and rowSpacing.
+TreeView support color styling for each part. Positioning can be customized with the properties ```rowHeight```, ```rowPadding``` and ```rowSpacing```.
 
 ```
     TreeView {
@@ -108,7 +111,7 @@ TreeView support color styling for each part. Positioning can be customized with
 
 ![](img/treeview03.png)
 
-Font can be customized through properties font and fontMetrics.
+Font can be customized through properties ```font``` and ```fontMetrics```.
 
 The default handle comes with differents default styles:
 
@@ -126,24 +129,24 @@ The default handle comes with differents default styles:
 ## Custom Delegates
 
 These component are provided and can be customized with delegates:
-- contentItem: the control element of each row
-- handle: element to collapse/expand the TreeView
-- highlight: the highlight element
+- ```contentItem```: the control element of each row
+- ```handle```: element to collapse/expand the TreeView
+- ```highlight```: the highlight element
 
-Each delegate can use the property currentRow to retreive the information for its own row.
+Each delegate can use the property ```currentRow``` to retreive the information for its own row.
 currentRow possess the following properties:
-- currentIndex
-- currentData
-- currentItem
-- itemChildCount
-- expanded
-- selected
-- hasChildren
-- isSelectedIndex
-- isHoveredIndex
-- isSelectedAndHoveredIndex
+- ```currentIndex```
+- ```currentData```
+- ```currentItem```
+- ```itemChildCount```
+- ```expanded```
+- ```selected```
+- ```hasChildren```
+- ```isSelectedIndex```
+- ```isHoveredIndex```
+- ```isSelectedAndHoveredIndex```
 
-currentRow.toggle() toggle the expansion of the current section.
+```currentRow.toggle()``` toggles the expansion of the current section.
 
 ```
 TreeView {
@@ -214,13 +217,14 @@ TreeView {
     }
 }
 ```
+![](img/treeview04.png)
 
 ## Data Access
 
 Data access for row element is provided by the properties:
-- currentIndex: return the model index for the selected element
-- currentData: return the data for the selected element
-- currentItem: return the visual item of the selected element
+- ```currentIndex```: return the model index for the selected element
+- ```urrentData```: return the data for the selected element
+- ```currentItem```: return the visual item of the selected element
 
 ## Credits
 
