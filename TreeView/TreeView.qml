@@ -89,7 +89,7 @@ Flickable {
         width: root.width
         height: root.rowHeight
         z: 0
-        visible: tree.currentItem !== null
+        visible: root.selectionEnable && tree.currentItem !== null
 
         Binding {
             target: highlightLoader.item
