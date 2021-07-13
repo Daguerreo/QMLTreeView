@@ -11,7 +11,7 @@ Flickable {
     readonly property alias currentItem: tree.currentItem
     property var currentData
 
-    property alias indicator: tree.indicator
+    property alias handle: tree.handle
     property alias contentItem: tree.contentItem
     property Component highlight: Rectangle {
         color: root.selectedColor
@@ -26,7 +26,7 @@ Flickable {
     property alias selectedColor: tree.selectedColor
     property alias selectedItemColor: tree.selectedItemColor
 
-    enum Indicator {
+    enum Handle {
         Triangle,
         TriangleSmall,
         TriangleOutline,
@@ -35,7 +35,7 @@ Flickable {
         Arrow
     }
 
-    property int indicatorStyle: TreeView.Indicator.Triangle
+    property int handleStyle: TreeView.Handle.Triangle
     property alias fontMetrics: tree.fontMetrics
     property alias font: tree.font
     property alias rowPadding: tree.childLeftPadding
@@ -62,7 +62,7 @@ Flickable {
         hoverColor: root.hoverColor
         selectedColor: root.selectedColor
         selectedItemColor: root.selectedItemColor
-        defaultIndicator: indicatorToString(indicatorStyle)
+        defaultIndicator: indicatorToString(handleStyle)
         z: 1
     }
 
@@ -83,14 +83,14 @@ Flickable {
         }
     }
 
-    function indicatorToString(indicator){
-        switch (indicator){
-        case TreeView.Indicator.Triangle: return "▶";
-        case TreeView.Indicator.TriangleSmall: return "►";
-        case TreeView.Indicator.TriangleOutline: return "▷";
-        case TreeView.Indicator.TriangleSmallOutline: return "⊳";
-        case TreeView.Indicator.Chevron: return "❱";
-        case TreeView.Indicator.Arrow: return "➤";
+    function indicatorToString(handle){
+        switch (handle){
+        case TreeView.Handle.Triangle: return "▶";
+        case TreeView.Handle.TriangleSmall: return "►";
+        case TreeView.Handle.TriangleOutline: return "▷";
+        case TreeView.Handle.TriangleSmallOutline: return "⊳";
+        case TreeView.Handle.Chevron: return "❱";
+        case TreeView.Handle.Arrow: return "➤";
         default: return "▶";
         }
     }

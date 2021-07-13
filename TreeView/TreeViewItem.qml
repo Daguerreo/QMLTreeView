@@ -42,8 +42,8 @@ Item {
 
     // Components
 
-    property Component indicator: Rectangle {
-        id: indicator
+    property Component handle: Rectangle {
+        id: handle
 
         implicitWidth: 20
         implicitHeight: 20
@@ -131,12 +131,12 @@ Item {
                         anchors.fill: parent
                         z: 1
 
-                        spacing: 10
+                        spacing: 6
 
-                        // indicator
+                        // handle
                         Loader {
                             id: indicatorLoader
-                            sourceComponent: indicator
+                            sourceComponent: handle
                             Layout.leftMargin: parent.spacing
 
                             property QtObject currentRow: _prop
@@ -197,7 +197,7 @@ Item {
                         item.itemLeftPadding = root.childLeftPadding
                     }
 
-                    Binding { target: loader.item; property: "indicator"; value: root.indicator; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "handle"; value: root.handle; when: loader.status == Loader.Ready }
                     Binding { target: loader.item; property: "contentItem"; value: root.contentItem; when: loader.status == Loader.Ready }
 
                     Binding { target: loader.item; property: "currentItem"; value: root.currentItem; when: loader.status == Loader.Ready }
