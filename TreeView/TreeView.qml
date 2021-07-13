@@ -26,6 +26,13 @@ Flickable {
     property alias selectedColor: tree.selectedColor
     property alias selectedItemColor: tree.selectedItemColor
 
+    property alias rowHeight: tree.rowHeight
+    property alias rowPadding: tree.rowPadding
+    property alias rowSpacing: tree.rowSpacing
+
+    property alias fontMetrics: tree.fontMetrics
+    property alias font: tree.font
+
     enum Handle {
         Triangle,
         TriangleSmall,
@@ -36,10 +43,6 @@ Flickable {
     }
 
     property int handleStyle: TreeView.Handle.Triangle
-    property alias fontMetrics: tree.fontMetrics
-    property alias font: tree.font
-    property alias rowPadding: tree.rowPadding
-    property alias rowHeight: tree.rowHeight
 
     contentHeight: tree.height
     contentWidth: parent.width

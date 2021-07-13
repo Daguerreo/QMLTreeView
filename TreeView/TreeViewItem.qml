@@ -21,8 +21,9 @@ Item {
     property bool hoverEnabled: false
 
     property int itemLeftPadding: 0
-    property int rowPadding: 30
     property int rowHeight: 24
+    property int rowPadding: 30
+    property int rowSpacing: 6
 
     property color color: "black"
     property color handleColor: color
@@ -97,7 +98,7 @@ Item {
                 Layout.leftMargin: itemLeftPadding
 
                 // space between parent and first children
-                spacing: 6
+                spacing: root.rowSpacing
 
                 QtObject {
                     id: _prop
@@ -131,7 +132,7 @@ Item {
                         anchors.fill: parent
                         Layout.fillHeight: true
                         z: 1
-                        spacing: 6
+                        spacing: root.rowSpacing
 
                         // handle
                         Loader {
@@ -213,8 +214,9 @@ Item {
                     Binding { target: loader.item; property: "selectedItemColor"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
 
                     Binding { target: loader.item; property: "itemLeftPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "rowPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
                     Binding { target: loader.item; property: "rowHeight"; value: root.rowHeight; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "rowPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "rowSpacing"; value: root.rowSpacing; when: loader.status == Loader.Ready }
                     Binding { target: loader.item; property: "fontMetrics"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
                 }
             }
