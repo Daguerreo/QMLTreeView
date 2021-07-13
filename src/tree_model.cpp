@@ -96,6 +96,18 @@ QModelIndex TreeModel::rootIndex()
    return QModelIndex();
 }
 
+int TreeModel::depth(const QModelIndex& index) const
+{
+   int count = 0;
+   auto anchestor = index;
+   while(anchestor.parent().isValid()){
+      anchestor = anchestor.parent();
+      ++count;
+   }
+
+   return count;
+}
+
 TreeItem* TreeModel::internalPointer(const QModelIndex& index) const
 {
    return static_cast<TreeItem* >(index.internalPointer());

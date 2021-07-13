@@ -102,9 +102,10 @@ Item {
                     property var currentIndex: root.model.index(index, 0, parentIndex)
                     property var currentData: root.model.data(currentIndex)
                     property Item currentItem: repeater.itemAt(index)
-                    property var itemChildCount: root.model.rowCount(currentIndex)
                     property bool expanded: false
                     property bool selected: false
+                    readonly property int itemChildCount: root.model.rowCount(currentIndex)
+                    readonly property int depth: root.model.depth(currentIndex)
                     readonly property bool hasChildren: itemChildCount > 0
                     readonly property bool isSelectedIndex: root.selectionEnabled && currentIndex === root.selectedIndex
                     readonly property bool isHoveredIndex: root.hoverEnabled && currentIndex === root.hoveredIndex

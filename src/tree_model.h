@@ -25,6 +25,8 @@ public:
    std::shared_ptr<TreeItem> rootItem() const;
    Q_INVOKABLE QModelIndex rootIndex();
 
+   Q_INVOKABLE int depth(const QModelIndex& index) const;
+
 private:
    TreeItem* internalPointer(const QModelIndex& index) const;
 
