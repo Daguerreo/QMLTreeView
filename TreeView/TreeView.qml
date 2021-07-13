@@ -38,9 +38,8 @@ Flickable {
     property int handleStyle: TreeView.Handle.Triangle
     property alias fontMetrics: tree.fontMetrics
     property alias font: tree.font
-    property alias rowPadding: tree.childLeftPadding
+    property alias rowPadding: tree.rowPadding
     property alias rowHeight: tree.rowHeight
-
 
     contentHeight: tree.height
     contentWidth: parent.width

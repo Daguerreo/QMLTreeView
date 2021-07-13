@@ -21,7 +21,7 @@ Item {
     property bool hoverEnabled: false
 
     property int itemLeftPadding: 0
-    property int childLeftPadding: 30
+    property int rowPadding: 30
     property int rowHeight: 24
 
     property color color: "black"
@@ -129,8 +129,8 @@ Item {
                         id: row
 
                         anchors.fill: parent
+                        Layout.fillHeight: true
                         z: 1
-
                         spacing: 6
 
                         // handle
@@ -194,7 +194,6 @@ Item {
                         item.model = root.model
                         item.parentIndex = _prop.currentIndex
                         item.childCount = _prop.itemChildCount
-                        item.itemLeftPadding = root.childLeftPadding
                     }
 
                     Binding { target: loader.item; property: "handle"; value: root.handle; when: loader.status == Loader.Ready }
@@ -212,6 +211,11 @@ Item {
                     Binding { target: loader.item; property: "selectionEnabled"; value: root.selectionEnabled; when: loader.status == Loader.Ready }
                     Binding { target: loader.item; property: "selectedColor"; value: root.selectedColor; when: loader.status == Loader.Ready }
                     Binding { target: loader.item; property: "selectedItemColor"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
+
+                    Binding { target: loader.item; property: "itemLeftPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "rowPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "rowHeight"; value: root.rowHeight; when: loader.status == Loader.Ready }
+                    Binding { target: loader.item; property: "fontMetrics"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
                 }
             }
         }
