@@ -17,7 +17,7 @@ Flickable {
         color: root.selectedColor
     }
 
-    property alias selectionEnable: tree.selectionEnabled
+    property alias selectionEnabled: tree.selectionEnabled
     property alias hoverEnabled: tree.hoverEnabled
 
     property alias color: tree.color
@@ -84,7 +84,7 @@ Flickable {
         width: root.width
         height: root.rowHeight
         z: 0
-        visible: root.selectionEnable && tree.currentItem !== null
+        visible: root.selectionEnabled && tree.currentItem !== null
 
         Binding {
             target: highlightLoader.item

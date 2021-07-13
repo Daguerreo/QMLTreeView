@@ -29,8 +29,6 @@ Window {
                 anchors.margins: 1
 
                 model: treeModel
-                selectionEnable: true
-                hoverEnabled: true
             }
         }
 
@@ -50,12 +48,13 @@ Window {
                 anchors.margins: 1
 
                 model: treeModel
-                selectionEnable: true
+                selectionEnabled: true
                 hoverEnabled: true
 
                 color: "steelblue"
+                handleColor: "steelblue"
                 hoverColor: "skyblue"
-                selectedColor: "dodgerblue"
+                selectedColor: "cornflowerblue"
                 selectedItemColor: "white"
                 indicatorStyle: TreeView.Indicator.Chevron
 
@@ -80,7 +79,42 @@ Window {
                 anchors.margins: 1
 
                 model: treeModel
-                selectionEnable: true
+                selectionEnabled: true
+
+                contentItem: Row {
+                    spacing: 10
+
+                    Rectangle {
+                        width: parent.height * 0.6
+                        height: width
+                        radius: width
+                        y: width / 3
+                        color: currentRow.hasChildren ? "tomato" : "lightcoral"
+                    }
+
+                    Text {
+                        verticalAlignment: Text.AlignVCenter
+
+                        color: currentRow.isSelectedIndex ? delegateTreeView.selectedItemColor : delegateTreeView.color
+                        text: currentRow.currentData
+                        font: delegateTreeView.font
+                    }
+                }
+
+                indicator: Rectangle {
+                    width: 10
+                    height: 2
+                    color: "black"
+                    visible: currentRow.hasChildren
+
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.height
+                        height: parent.width
+                        color: parent.color
+                        visible: parent.visible && !currentRow.expanded
+                    }
+                }
 
                 highlight: Item {
                     Rectangle {
