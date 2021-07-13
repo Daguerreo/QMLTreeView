@@ -49,7 +49,7 @@ Flickable {
 
     Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
 
-    TreeItem {
+    TreeViewItem {
         id: tree
 
         anchors {

@@ -190,7 +190,7 @@ Item {
 
                     width: parent.width
                     visible: _prop.expanded
-                    source: "TreeItem.qml"
+                    source: "TreeViewItem.qml"
                     onLoaded: {
                         item.model = root.model
                         item.parentIndex = _prop.currentIndex

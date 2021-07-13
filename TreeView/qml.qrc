@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>TreeItem.qml</file>
+        <file>TreeViewItem.qml</file>
         <file>TreeView.qml</file>
     </qresource>
 </RCC>
