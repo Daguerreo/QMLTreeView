@@ -113,6 +113,13 @@ int TreeModel::depth(const QModelIndex& index) const
    return count;
 }
 
+void TreeModel::clear()
+{
+   beginResetModel();
+   _rootItem = std::make_shared<TreeItem>(QVariant{});
+   endResetModel();
+}
+
 TreeItem* TreeModel::internalPointer(const QModelIndex& index) const
 {
    return static_cast<TreeItem* >(index.internalPointer());

@@ -13,6 +13,7 @@ class TreeModel : public QAbstractItemModel
 public:
    explicit TreeModel(QObject* parent = nullptr);
 
+public:
    int rowCount(const QModelIndex& index) const override;
    int columnCount(const QModelIndex& index) const override;
 
@@ -21,6 +22,7 @@ public:
 
    QVariant data(const QModelIndex& index, int role = 0) const override;
 
+public:
    void addTopLevelItem(TreeItem* child);
    void addItem(TreeItem* parent, TreeItem* child);
 
@@ -28,6 +30,7 @@ public:
 
    Q_INVOKABLE QModelIndex rootIndex();
    Q_INVOKABLE int depth(const QModelIndex& index) const;
+   Q_INVOKABLE void clear();
 
 private:
    TreeItem* internalPointer(const QModelIndex& index) const;
