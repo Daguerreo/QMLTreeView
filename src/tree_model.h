@@ -16,15 +16,17 @@ public:
    int rowCount(const QModelIndex& index) const override;
    int columnCount(const QModelIndex& index) const override;
 
-   QModelIndex index(const int row, const int column, const QModelIndex &parent) const override;
+   QModelIndex index(int row, int column, const QModelIndex& parent) const override;
    QModelIndex parent(const QModelIndex& childIndex) const override;
 
-   QVariant data(const QModelIndex& index, const int role = 0) const override;
+   QVariant data(const QModelIndex& index, int role = 0) const override;
+
+   void addTopLevelItem(TreeItem* child);
    void addItem(TreeItem* parent, TreeItem* child);
 
    std::shared_ptr<TreeItem> rootItem() const;
-   Q_INVOKABLE QModelIndex rootIndex();
 
+   Q_INVOKABLE QModelIndex rootIndex();
    Q_INVOKABLE int depth(const QModelIndex& index) const;
 
 private:

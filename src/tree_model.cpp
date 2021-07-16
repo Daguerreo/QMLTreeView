@@ -64,13 +64,18 @@ QVariant TreeModel::data(const QModelIndex& index, const int role) const
    return internalPointer(index)->data();
 }
 
+void TreeModel::addTopLevelItem(TreeItem* child)
+{
+   addItem(_rootItem.get(), child);
+}
+
 void TreeModel::addItem(TreeItem* parent, TreeItem* child)
 {
    if(!child){
       return;
    }
 
-   emit layoutAboutToBeChanged();
+   layoutAboutToBeChanged();
 
    if (child->parentItem()) {
       beginRemoveRows(QModelIndex(), child->parentItem()->childCount() - 1, child->parentItem()->childCount());
@@ -83,7 +88,7 @@ void TreeModel::addItem(TreeItem* parent, TreeItem* child)
    parent->appendChild(child);
    endInsertRows();
 
-   emit layoutChanged();
+   layoutChanged();
 }
 
 std::shared_ptr<TreeItem> TreeModel::rootItem() const

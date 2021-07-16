@@ -5,8 +5,6 @@
 
 TreeModel* populateModel()
 {
-   auto treeModel = new TreeModel();
-   auto root = treeModel->rootItem().get();
    auto parent1 = new TreeItem("Parent1");
    auto parent2 = new TreeItem("Parent2");
    auto parent3 = new TreeItem("Parent3");
@@ -22,12 +20,13 @@ TreeModel* populateModel()
    auto grateChild1 = new TreeItem("GreateChild1");
    auto grateChild2 = new TreeItem("GreateChild2");
 
-   treeModel->addItem(root, parent1);
-   treeModel->addItem(root, parent2);
-   treeModel->addItem(root, parent3);
-   treeModel->addItem(root, parent4);
-   treeModel->addItem(root, parent5);
-   treeModel->addItem(root, parent6);
+   auto treeModel = new TreeModel();
+   treeModel->addTopLevelItem(parent1);
+   treeModel->addTopLevelItem(parent2);
+   treeModel->addTopLevelItem(parent3);
+   treeModel->addTopLevelItem(parent4);
+   treeModel->addTopLevelItem(parent5);
+   treeModel->addTopLevelItem(parent6);
 
    treeModel->addItem(parent1, child1);
    treeModel->addItem(parent1, child2);
