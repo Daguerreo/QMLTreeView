@@ -15,10 +15,12 @@ QML_IMPORT_PATH =
 QML_DESIGNER_IMPORT_PATH =
 
 HEADERS += \
-   $$files(../src/*.h)
+   $$files(../src/*.h) \
+   json_entry.h
 
 SOURCES += \
         $$files(../src/*.cpp) \
+        json_entry.cpp \
         main.cpp
 
 INCLUDEPATH += \
