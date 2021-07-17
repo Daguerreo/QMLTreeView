@@ -147,6 +147,7 @@ Item {
 
                             sourceComponent: contentItem
                             Layout.fillWidth: true
+                            height: rowHeight
 
                             property QtObject currentRow: _prop
                         }
@@ -190,7 +191,7 @@ Item {
                 Loader {
                     id: loader
 
-                    width: parent.width
+                    Layout.fillWidth: true
                     visible: _prop.expanded
                     source: "TreeViewItem.qml"
                     onLoaded: {
