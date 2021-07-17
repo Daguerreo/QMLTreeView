@@ -20,23 +20,20 @@ Window {
         rowPadding: 20
         selectionEnabled: true
 
-        contentItem: Item {
+        contentItem: RowLayout {
             Text {
                 verticalAlignment: Text.AlignVCenter
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-
+                horizontalAlignment: Text.AlignLeft
                 text: currentRow.currentData.key
-                font: jsonView.font
             }
-            Text {
-                verticalAlignment: Text.AlignVCenter
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.rightMargin: 10
 
+            Text {
+                Layout.fillWidth: true
+                Layout.rightMargin: 10
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
                 text: currentRow.currentData.value
-                font: jsonView.font
             }
         }
     }

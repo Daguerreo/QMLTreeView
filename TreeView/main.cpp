@@ -50,7 +50,7 @@ void load(const QString& key, const QJsonValue& value, TreeModel* model, TreeIte
    if(value.isObject()) {
       JsonEntry entry;
       entry.setKey(key);
-      entry.setValue("object");
+//      entry.setValue("object");
       entry.setType(QJsonValue::Object);
       auto child = new TreeItem(QVariant::fromValue(entry));
 
@@ -63,7 +63,7 @@ void load(const QString& key, const QJsonValue& value, TreeModel* model, TreeIte
    else if(value.isArray()) {
       JsonEntry entry;
       entry.setKey(key);
-      entry.setValue("array");
+//      entry.setValue("array");
       entry.setType(QJsonValue::Array);
       auto child = new TreeItem(QVariant::fromValue(entry));
 
