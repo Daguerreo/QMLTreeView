@@ -25,9 +25,15 @@
 
 #include "tree_item.h"
 
-TreeItem::TreeItem(const QVariant& data, TreeItem* parent)
+TreeItem::TreeItem()
+   : _itemData(),
+     _parentItem(nullptr)
+{
+}
+
+TreeItem::TreeItem(const QVariant& data)
    : _itemData(data),
-     _parentItem(parent)
+     _parentItem(nullptr)
 {
 }
 

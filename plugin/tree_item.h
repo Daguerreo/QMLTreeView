@@ -32,7 +32,8 @@
 class TreeItem
 {
 public:
-   explicit TreeItem(const QVariant& data, TreeItem* parent = nullptr);
+   TreeItem();
+   explicit TreeItem(const QVariant& data);
    ~TreeItem();
 
    TreeItem* parentItem();

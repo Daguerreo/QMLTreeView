@@ -9,37 +9,43 @@
 #include "tree_model.h"
 #include "json_entry.h"
 
-void load(const QString& key, const QJsonValue& value, TreeModel* model, TreeItem* parent)
-{
-   if(value.isObject()) {
-      JsonEntry entry;
-      entry.setKey(key);
-      entry.setType(QJsonValue::Object);
-      auto child = new TreeItem(QVariant::fromValue(entry));
 
-      auto obj = value.toObject();
-      for(auto it=obj.begin(); it!=obj.end(); ++it) {
-         model->addItem(parent, child);
-         load(it.key(), it.value(), model, child);
+void loadValue(const QJsonValue& value, TreeItem* parent, TreeModel* model)
+{
+
+   if(value.isObject()) {
+      auto object = value.toObject();
+      for(auto it=object.begin(); it!=object.end(); ++it){
+         JsonEntry entry;
+         entry.setKey(it.key());
+         entry.setType(QJsonValue::Object);
+         if(it.value().isArray() || it.value().isObject()){
+            auto child = new TreeItem(QVariant::fromValue(entry));
+            loadValue(it.value(), child, model);
+            model->addItem(parent, child);
+         }
+         else {
+            entry.setValue(it.value().toVariant());
+            auto child = new TreeItem(QVariant::fromValue(entry));
+            model->addItem(parent, child);
+         }
       }
    }
-   else if(value.isArray()) {
-      JsonEntry entry;
-      entry.setKey(key);
-      entry.setType(QJsonValue::Array);
-      auto child = new TreeItem(QVariant::fromValue(entry));
-
-      auto array = value.toArray();
+   else if(value.isArray()){
       int index = 0;
-      for(auto&& element : array){
+      auto array = value.toArray();
+      for(auto&& element: array){
+         JsonEntry entry;
+         entry.setKey("[" + QString::number(index) + "]");
+         entry.setType(QJsonValue::Array);
+         auto child = new TreeItem(QVariant::fromValue(entry));
          model->addItem(parent, child);
-         load(QString::number(index), element, model, child);
+         loadValue(element, child, model);
          ++index;
       }
    }
    else {
       JsonEntry entry;
-      entry.setKey(key);
       entry.setValue(value.toVariant());
       entry.setType(value.type());
       auto child = new TreeItem(QVariant::fromValue(entry));
@@ -79,11 +85,13 @@ TreeModel* populateJson()
 
    auto jsonModel = new TreeModel();
 
-   auto obj = doc.isArray() ? QJsonValue(doc.array()) : QJsonValue(doc.object());
-   load("root", obj, jsonModel, jsonModel->rootItem().get());
+   auto root = doc.isArray() ? QJsonValue(doc.array()) : QJsonValue(doc.object());
+   loadValue(root, jsonModel->rootItem().get(), jsonModel);
 
    return jsonModel;
 }
+
+
 
 int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
