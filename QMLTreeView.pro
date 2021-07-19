@@ -1,8 +1,9 @@
 TEMPLATE = subdirs
 
 DISTFILES += \
-   $$files(src/*)
+   $$files(plugin/*)
 
 SUBDIRS += \
-   TreeView \
-   ListView
+   examples/CustomDelegateTreeView \
+   examples/SimpleTreeView \
+   examples/StyledTreeView

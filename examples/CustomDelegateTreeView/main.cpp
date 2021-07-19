@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+
 #include "tree_model.h"
 
 TreeModel* populateModel()
@@ -60,3 +61,4 @@ int main(int argc, char *argv[]) {
 
    return app.exec();
 }
+
