@@ -33,7 +33,7 @@ Window {
 
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignRight
-                text: currentRow.currentData.value
+                text: currentRow.currentData.value ? currentRow.currentData.value : ""
             }
         }
     }
