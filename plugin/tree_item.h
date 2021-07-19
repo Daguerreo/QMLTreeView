@@ -31,11 +31,21 @@
  */
 class TreeItem
 {
+   friend class TreeModel;
+
 public:
    TreeItem();
    explicit TreeItem(const QVariant& data);
    ~TreeItem();
 
+   const QVariant& data() const;
+   void setData(const QVariant& data);
+
+   int childCount() const;
+   int row() const;
+   bool isLeaf() const;
+
+private:
    TreeItem* parentItem();
    void setParentItem(TreeItem* parentItem);
 
@@ -43,13 +53,6 @@ public:
    void removeChild(TreeItem* item);
 
    TreeItem* child(int row);
-   int childCount() const;
-   int row() const;
-
-   const QVariant& data() const;
-   void setData(const QVariant& data);
-
-   bool isLeaf() const;
 
 private:
    QVariant _itemData;
