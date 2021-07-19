@@ -5,5 +5,6 @@ DISTFILES += \
 
 SUBDIRS += \
    examples/CustomDelegateTreeView \
+   examples/JsonTreeView \
    examples/SimpleTreeView \
    examples/StyledTreeView
