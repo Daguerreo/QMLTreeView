@@ -12,30 +12,30 @@ Window {
    title: qsTr("Json TreeView")
 
    TreeView {
-       id: jsonView
+      id: jsonView
 
-       anchors.fill: parent
-       anchors.margins: 1
+      anchors.fill: parent
+      anchors.margins: 1
 
-       model: jsonModel
-       rowPadding: 20
-       selectionEnabled: true
+      model: jsonModel
+      rowPadding: 20
+      selectionEnabled: true
 
-       contentItem: RowLayout {
-           Text {
-               verticalAlignment: Text.AlignVCenter
-               horizontalAlignment: Text.AlignLeft
-               text: currentRow.currentData.key
-           }
+      contentItem: RowLayout {
+         Text {
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            text: currentRow.currentData.key
+         }
 
-           Text {
-               Layout.fillWidth: true
-               Layout.rightMargin: 10
+         Text {
+            Layout.fillWidth: true
+            Layout.rightMargin: 10
 
-               verticalAlignment: Text.AlignVCenter
-               horizontalAlignment: Text.AlignRight
-               text: currentRow.currentData.value ? currentRow.currentData.value : ""
-           }
-       }
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignRight
+            text: currentRow.currentData.value ? currentRow.currentData.value : ""
+         }
+      }
    }
 }
