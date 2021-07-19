@@ -258,6 +258,8 @@ Since the tree item store a ```QVariant``` as data, it's possible to register yo
 }
 ```
 
+main.qml
+
 ```
 TreeView {
    id: jsonView
