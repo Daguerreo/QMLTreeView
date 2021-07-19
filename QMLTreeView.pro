@@ -1,14 +1,10 @@
 TEMPLATE = subdirs
 
 DISTFILES += \
-   $$files(src/*)
+   $$files(plugin/*)
 
 SUBDIRS += \
-   TreeView \
-   ListView
-
-HEADERS += \
-   src/json_entry.h
-
-SOURCES += \
-   src/json_entry.cpp
+   examples/CustomDelegateTreeView \
+   examples/JsonTreeView \
+   examples/SimpleTreeView \
+   examples/StyledTreeView
