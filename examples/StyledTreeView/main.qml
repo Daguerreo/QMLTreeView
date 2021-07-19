@@ -35,7 +35,7 @@ Window {
                 rowHeight: 40
                 rowPadding: 30
                 rowSpacing: 12
-                font.pixelSize: 24
+                font.pixelSize: 20
 
                 onCurrentIndexChanged: console.log("current index is (row=" + currentIndex.row + ", depth=" + model.depth(currentIndex) + ")")
                 onCurrentDataChanged: console.log("current data is " + currentData)
