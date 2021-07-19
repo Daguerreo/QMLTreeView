@@ -11,7 +11,7 @@ The project is still in beta, so breaking change can happen and backward compati
  - Item hovering
  - Customizable layout (color, font, positioning)
  - Delegates to fully customize part of the TreeView
-
+ - A Json Tree View implementation
 
 
 # Usage
@@ -223,9 +223,69 @@ TreeView {
 
 Data access for row element is provided by the properties:
 - ```currentIndex```: return the model index for the selected element
-- ```urrentData```: return the data for the selected element
+- ```currentData```: return the data for the selected element
 - ```currentItem```: return the visual item of the selected element
 
-## Credits
 
-[QmlTreeViewExample](https://github.com/Palm1r/QmlTreeViewExample)
+## Customizing Models
+
+Since the tree item store a ```QVariant``` as data, it's possible to register your custom type with ```Q_DECLARE_METATYPE``` and use the ```TreeModel``` as is without modifying it.
+
+**JsonTreeView** example show how to achieve that, declaring a ```JsonEntry``` class and providing it to the model.
+
+```
+{
+   "firstName": "John",
+   "lastName": "Smith",
+   "age": 25,
+   "address": {
+      "streetAddress": "21 2nd Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10021",
+      "owner": true
+   },
+   "phoneNumber": [
+      {
+        "type": "home",
+        "number": "212 555-1234"
+      },
+      {
+        "type": "fax",
+        "number": "646 555-4567"
+      }
+   ]
+}
+```
+
+```
+TreeView {
+   id: jsonView
+   
+   anchors.fill: parent
+   anchors.margins: 1
+   
+   model: jsonModel
+   rowPadding: 20
+   selectionEnabled: true
+   
+   contentItem: RowLayout {
+      Text {
+         verticalAlignment: Text.AlignVCenter
+         horizontalAlignment: Text.AlignLeft
+         text: currentRow.currentData.key
+      }
+      
+      Text {
+         Layout.fillWidth: true
+         Layout.rightMargin: 10
+         
+         verticalAlignment: Text.AlignVCenter
+         horizontalAlignment: Text.AlignRight
+         text: currentRow.currentData.value ? currentRow.currentData.value : ""
+      }
+   }
+}
+```
+
+![](img/treeview05.png)
