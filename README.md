@@ -77,7 +77,7 @@ Hovering and selection can be activated enabling the respective properties
         anchors.fill: parent
         model: treeModel
         
-        selectionEnable: true
+        selectionEnabled: true
         hoverEnabled: true
     }
 ```
@@ -93,7 +93,7 @@ TreeView support color styling for each part. Positioning can be customized with
         anchors.fill: parent
         model: treeModel
 
-        selectionEnable: true
+        selectionEnabled: true
         hoverEnabled: true
 
         color: "steelblue"
