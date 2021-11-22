@@ -28,226 +28,231 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 Item {
-    id: root
+   id: root
 
-    // model properties
+   // model properties
 
-    property var model
-    property var parentIndex
-    property var childCount
+   property var model
+   property var parentIndex
+   property var childCount
 
-    property var currentItem: null
-    property var selectedIndex: null
-    property var hoveredIndex: null
+   property var currentItem: null
+   property var selectedIndex: null
+   property var hoveredIndex: null
 
-    // layout properties
+   // layout properties
 
-    property bool selectionEnabled: false
-    property bool hoverEnabled: false
+   property bool selectionEnabled: false
+   property bool hoverEnabled: false
 
-    property int itemLeftPadding: 0
-    property int rowHeight: 24
-    property int rowPadding: 30
-    property int rowSpacing: 6
+   property int itemLeftPadding: 0
+   property int rowHeight: 24
+   property int rowPadding: 30
+   property int rowSpacing: 6
 
-    property color color: "black"
-    property color handleColor: color
-    property color hoverColor: "lightgray"
-    property color selectedColor: "silver"
-    property color selectedItemColor: color
+   property color color: "black"
+   property color handleColor: color
+   property color hoverColor: "lightgray"
+   property color selectedColor: "silver"
+   property color selectedItemColor: color
 
-    property string defaultIndicator: "▶"
-    property FontMetrics fontMetrics: FontMetrics {
-        font.pixelSize: 20
-    }
-    property alias font: root.fontMetrics.font
+   property string defaultIndicator: "▶"
+   property FontMetrics fontMetrics: FontMetrics {
+      font.pixelSize: 20
+   }
+   property alias font: root.fontMetrics.font
 
+   implicitWidth: parent.width
+   implicitHeight: childrenRect.height
 
-    implicitWidth: parent.width
-    implicitHeight: childrenRect.height
+   // Components
 
-    // Components
+   property Component handle: Rectangle {
+      id: handle
 
-    property Component handle: Rectangle {
-        id: handle
+      implicitWidth: 20
+      implicitHeight: 20
+      Layout.leftMargin: parent.spacing
+      rotation: currentRow.expanded ? 90 : 0
+      opacity: currentRow.hasChildren
+      color: "transparent"
 
-        implicitWidth: 20
-        implicitHeight: 20
-        Layout.leftMargin: parent.spacing
-        rotation: currentRow.expanded ? 90 : 0
-        opacity: currentRow.hasChildren
-        color: "transparent"
+      Text {
+         anchors.centerIn: parent
+         text: defaultIndicator
+         font: root.font
+         antialiasing: true
+         color: currentRow.isSelectedIndex ? root.selectedItemColor : root.handleColor
+      }
+   }
 
-        Text {
-            anchors.centerIn: parent
-            text: defaultIndicator
-            font: root.font
-            antialiasing: true
-            color: currentRow.isSelectedIndex ? root.selectedItemColor : root.handleColor
-        }
-    }
+   property Component contentItem: Text {
+      id: contentData
 
-    property Component contentItem: Text {
-        id: contentData
+      anchors.verticalCenter: parent.verticalCenter
+      verticalAlignment: Text.AlignVCenter
 
-        anchors.verticalCenter: parent.verticalCenter
-        verticalAlignment: Text.AlignVCenter
+      color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
+      text: currentRow.currentData
+      font: root.font
+   }
 
-        color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
-        text: currentRow.currentData
-        font: root.font
-    }
+   property Component hoverComponent: Rectangle {
+      width: parent.width
+      height: parent.height
+      color: currentRow.isHoveredIndex && !currentRow.isSelectedIndex ? root.hoverColor : "transparent"
+   }
 
-    property Component hoverComponent: Rectangle {
-        width: parent.width
-        height: parent.height
-        color: currentRow.isHoveredIndex && !currentRow.isSelectedIndex ? root.hoverColor : "transparent"
-    }
+   // Body
 
-    // Body
+   ColumnLayout {
+      width: parent.width
+      spacing: 0
 
-    ColumnLayout {
-        width: parent.width
-        spacing: 0
+      Repeater {
+         id: repeater
+         model: childCount
+         Layout.fillWidth: true
 
-        Repeater {
-            id: repeater
-            model: childCount
-            Layout.fillWidth: true
+         delegate: ColumnLayout {
+            id: itemColumn
 
-            delegate: ColumnLayout {
-                id: itemColumn
+            Layout.leftMargin: itemLeftPadding
+            spacing: 0
 
-                Layout.leftMargin: itemLeftPadding
-                spacing: 0
+            QtObject {
+               id: _prop
 
-                QtObject {
-                    id: _prop
+               property var currentIndex: root.model.index(index, 0, parentIndex)
+               property var currentData: root.model.data(currentIndex)
+               property Item currentItem: repeater.itemAt(index)
+               property bool expanded: false
+               property bool selected: false
+               readonly property int itemChildCount: root.model.rowCount(currentIndex)
+               readonly property int depth: root.model.depth(currentIndex)
+               readonly property bool hasChildren: itemChildCount > 0
+               readonly property bool isSelectedIndex: root.selectionEnabled && currentIndex === root.selectedIndex
+               readonly property bool isHoveredIndex: root.hoverEnabled && currentIndex === root.hoveredIndex
+               readonly property bool isSelectedAndHoveredIndex: hoverEnabled && selectionEnabled && isHoveredIndex && isSelectedIndex
 
-                    property var currentIndex: root.model.index(index, 0, parentIndex)
-                    property var currentData: root.model.data(currentIndex)
-                    property Item currentItem: repeater.itemAt(index)
-                    property bool expanded: false
-                    property bool selected: false
-                    readonly property int itemChildCount: root.model.rowCount(currentIndex)
-                    readonly property int depth: root.model.depth(currentIndex)
-                    readonly property bool hasChildren: itemChildCount > 0
-                    readonly property bool isSelectedIndex: root.selectionEnabled && currentIndex === root.selectedIndex
-                    readonly property bool isHoveredIndex: root.hoverEnabled && currentIndex === root.hoveredIndex
-                    readonly property bool isSelectedAndHoveredIndex: hoverEnabled && selectionEnabled && isHoveredIndex && isSelectedIndex
-
-                    function toggle(){ if(_prop.hasChildren) _prop.expanded = !_prop.expanded }
-                }
-
-                Item {
-                    id: column
-
-                    Layout.fillWidth: true
-
-                    width: row.implicitWidth
-                    height: Math.max(row.implicitHeight, root.rowHeight)
-
-                    RowLayout {
-                        id: row
-
-                        anchors.fill: parent
-                        Layout.fillHeight: true
-                        z: 1
-                        spacing: root.rowSpacing
-
-                        // handle
-                        Loader {
-                            id: indicatorLoader
-                            sourceComponent: handle
-                            Layout.leftMargin: parent.spacing
-
-                            property QtObject currentRow: _prop
-
-                            TapHandler { onSingleTapped: _prop.toggle() }
-                        }
-
-                        //  Content
-                        Loader {
-                            id: contentItemLoader
-
-                            sourceComponent: contentItem
-                            Layout.fillWidth: true
-                            height: rowHeight
-
-                            property QtObject currentRow: _prop
-                        }
-
-                        TapHandler {
-                            onDoubleTapped: _prop.toggle()
-                            onSingleTapped: {
-                                root.currentItem = _prop.currentItem
-                                root.selectedIndex = _prop.currentIndex
-                            }
-                        }
-                    }
-
-                    Loader {
-                        id: hoverLoader
-
-                        sourceComponent: hoverComponent
-                        width: row.width + (1 + _prop.depth * rowPadding)
-                        height: parent.height
-                        x: -(_prop.depth * rowPadding)
-                        z: 0
-                        clip: false
-
-                        property QtObject currentRow: _prop
-
-                        HoverHandler {
-                            onHoveredChanged: {
-                                if(root.hoverEnabled){
-                                    if(hovered && root.hoveredIndex !== _prop.currentIndex)
-                                        root.hoveredIndex = _prop.currentIndex
-                                    if(!hovered && root.hoveredIndex === _prop.currentIndex)
-                                        root.hoveredIndex = null
-                                }
-                            }
-                        }
-                    }
-
-                }
-
-                // loader to populate the children row for each node
-                Loader {
-                    id: loader
-
-                    Layout.fillWidth: true
-                    visible: _prop.expanded
-                    source: "TreeViewItem.qml"
-                    onLoaded: {
-                        item.model = root.model
-                        item.parentIndex = _prop.currentIndex
-                        item.childCount = _prop.itemChildCount
-                    }
-
-                    Binding { target: loader.item; property: "handle"; value: root.handle; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "contentItem"; value: root.contentItem; when: loader.status == Loader.Ready }
-
-                    Binding { target: loader.item; property: "currentItem"; value: root.currentItem; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "selectedIndex"; value: root.selectedIndex; when: loader.status == Loader.Ready }
-                    Binding { target: root; property: "currentItem"; value: loader.item.currentItem; when: loader.status == Loader.Ready }
-                    Binding { target: root; property: "selectedIndex"; value: loader.item.selectedIndex; when: loader.status == Loader.Ready }
-
-                    Binding { target: loader.item; property: "color"; value: root.color; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "handleColor"; value: root.handleColor; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "hoverEnabled"; value: root.hoverEnabled; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "hoverColor"; value: root.hoverColor; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "selectionEnabled"; value: root.selectionEnabled; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "selectedColor"; value: root.selectedColor; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "selectedItemColor"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
-
-                    Binding { target: loader.item; property: "itemLeftPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "rowHeight"; value: root.rowHeight; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "rowPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "rowSpacing"; value: root.rowSpacing; when: loader.status == Loader.Ready }
-                    Binding { target: loader.item; property: "fontMetrics"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
-                }
+               function toggle(){ if(_prop.hasChildren) _prop.expanded = !_prop.expanded }
             }
-        }
-    }
+
+            Item {
+               id: column
+
+               Layout.fillWidth: true
+
+               width: row.implicitWidth
+               height: Math.max(row.implicitHeight, root.rowHeight)
+
+               RowLayout {
+                  id: row
+
+                  anchors.fill: parent
+                  Layout.fillHeight: true
+
+                  z: 1
+                  spacing: root.rowSpacing
+
+                  // handle
+                  Loader {
+                     id: indicatorLoader
+                     sourceComponent: handle
+
+                     Layout.leftMargin: parent.spacing
+
+                     property QtObject currentRow: _prop
+
+                     TapHandler { onSingleTapped: _prop.toggle() }
+                  }
+
+                  //  Content
+                  Loader {
+                     id: contentItemLoader
+                     sourceComponent: contentItem
+
+                     Layout.fillWidth: true
+                     height: rowHeight
+
+                     property QtObject currentRow: _prop
+                  }
+
+                  TapHandler {
+                     onDoubleTapped: _prop.toggle()
+                     onSingleTapped: {
+                        root.currentItem = _prop.currentItem
+                        root.selectedIndex = _prop.currentIndex
+                     }
+                  }
+               }
+
+               Loader {
+                  id: hoverLoader
+                  sourceComponent: hoverComponent
+
+                  width: row.width + (1 + _prop.depth * rowPadding)
+                  height: parent.height
+
+                  x: -(_prop.depth * rowPadding)
+                  z: 0
+
+                  clip: false
+
+                  property QtObject currentRow: _prop
+
+                  HoverHandler {
+                     onHoveredChanged: {
+                        if(root.hoverEnabled){
+                           if(hovered && root.hoveredIndex !== _prop.currentIndex)
+                              root.hoveredIndex = _prop.currentIndex
+                           if(!hovered && root.hoveredIndex === _prop.currentIndex)
+                              root.hoveredIndex = null
+                        }
+                     }
+                  }
+               }
+
+            }
+
+            // loader to populate the children row for each node
+            Loader {
+               id: loader
+
+               Layout.fillWidth: true
+
+               source: "TreeViewItem.qml"
+               visible: _prop.expanded
+
+               onLoaded: {
+                  item.model = root.model
+                  item.parentIndex = _prop.currentIndex
+                  item.childCount = _prop.itemChildCount
+               }
+
+               Binding { target: loader.item; property: "handle"; value: root.handle; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "contentItem"; value: root.contentItem; when: loader.status == Loader.Ready }
+
+               Binding { target: loader.item; property: "currentItem"; value: root.currentItem; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "selectedIndex"; value: root.selectedIndex; when: loader.status == Loader.Ready }
+               Binding { target: root; property: "currentItem"; value: loader.item.currentItem; when: loader.status == Loader.Ready }
+               Binding { target: root; property: "selectedIndex"; value: loader.item.selectedIndex; when: loader.status == Loader.Ready }
+
+               Binding { target: loader.item; property: "color"; value: root.color; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "handleColor"; value: root.handleColor; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "hoverEnabled"; value: root.hoverEnabled; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "hoverColor"; value: root.hoverColor; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "selectionEnabled"; value: root.selectionEnabled; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "selectedColor"; value: root.selectedColor; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "selectedItemColor"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
+
+               Binding { target: loader.item; property: "itemLeftPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "rowHeight"; value: root.rowHeight; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "rowPadding"; value: root.rowPadding; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "rowSpacing"; value: root.rowSpacing; when: loader.status == Loader.Ready }
+               Binding { target: loader.item; property: "fontMetrics"; value: root.selectedItemColor; when: loader.status == Loader.Ready }
+            }
+         }
+      }
+   }
 }

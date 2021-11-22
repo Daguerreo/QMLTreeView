@@ -27,8 +27,13 @@
 
 TreeModel::TreeModel(QObject* parent)
    : QAbstractItemModel(parent),
-     _rootItem{std::make_shared<TreeItem>(QVariant{})}
+     _rootItem{new TreeItem()}
 {
+}
+
+TreeModel::~TreeModel()
+{
+   delete _rootItem;
 }
 
 int TreeModel::rowCount(const QModelIndex& parent) const
@@ -49,10 +54,10 @@ int TreeModel::columnCount(const QModelIndex&  /*parent*/) const
 QModelIndex TreeModel::index(const int row, const int column, const QModelIndex& parent) const
 {
    if (!hasIndex(row, column, parent)){
-      return QModelIndex();
+      return {};
    }
 
-   TreeItem* item = _rootItem.get();
+   TreeItem* item = _rootItem;
    if (parent.isValid()){
       item = internalPointer(parent);
    }
@@ -61,20 +66,20 @@ QModelIndex TreeModel::index(const int row, const int column, const QModelIndex&
       return createIndex(row, column, child);
    }
 
-   return QModelIndex();
+   return {};
 }
 
 QModelIndex TreeModel::parent(const QModelIndex& index) const
 {
    if (!index.isValid()){
-      return QModelIndex();
+      return {};
    }
 
    TreeItem* childItem = internalPointer(index);
    TreeItem* parentItem = childItem->parentItem();
 
-   if (parentItem == _rootItem.get()){
-      return QModelIndex();
+   if (parentItem == _rootItem){
+      return {};
    }
 
    return createIndex(parentItem->row(), 0, parentItem);
@@ -91,7 +96,7 @@ QVariant TreeModel::data(const QModelIndex& index, const int role) const
 
 void TreeModel::addTopLevelItem(TreeItem* child)
 {
-   addItem(_rootItem.get(), child);
+   addItem(_rootItem, child);
 }
 
 void TreeModel::addItem(TreeItem* parent, TreeItem* child)
@@ -100,7 +105,7 @@ void TreeModel::addItem(TreeItem* parent, TreeItem* child)
       return;
    }
 
-   layoutAboutToBeChanged();
+   emit layoutAboutToBeChanged();
 
    if (child->parentItem()) {
       beginRemoveRows(QModelIndex(), child->parentItem()->childCount() - 1, child->parentItem()->childCount());
@@ -113,17 +118,17 @@ void TreeModel::addItem(TreeItem* parent, TreeItem* child)
    parent->appendChild(child);
    endInsertRows();
 
-   layoutChanged();
+   emit layoutChanged();
 }
 
-std::shared_ptr<TreeItem> TreeModel::rootItem() const
+TreeItem* TreeModel::rootItem() const
 {
    return _rootItem;
 }
 
 QModelIndex TreeModel::rootIndex()
 {
-   return QModelIndex();
+   return {};
 }
 
 int TreeModel::depth(const QModelIndex& index) const
@@ -141,7 +146,8 @@ int TreeModel::depth(const QModelIndex& index) const
 void TreeModel::clear()
 {
    beginResetModel();
-   _rootItem = std::make_shared<TreeItem>(QVariant{});
+   delete _rootItem;
+   _rootItem = new TreeItem();
    endResetModel();
 }
 

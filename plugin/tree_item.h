@@ -22,7 +22,8 @@
  * SOFTWARE.
  */
 
-#pragma once
+#ifndef QML_TREEVIEW_TREE_ITEM_H
+#define QML_TREEVIEW_TREE_ITEM_H
 
 #include <QVariant>
 
@@ -59,3 +60,5 @@ private:
    TreeItem* _parentItem;
    QVector<TreeItem*> _childItems;
 };
+
+#endif // QML_TREEVIEW_TREE_ITEM_H

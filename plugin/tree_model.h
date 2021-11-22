@@ -22,7 +22,8 @@
  * SOFTWARE.
  */
 
-#pragma once
+#ifndef QML_TREEVIEW_TREE_MODEL_H
+#define QML_TREEVIEW_TREE_MODEL_H
 
 #include <memory>
 
@@ -36,6 +37,7 @@ class TreeModel : public QAbstractItemModel
 
 public:
    explicit TreeModel(QObject* parent = nullptr);
+   ~TreeModel() override;
 
 public:
    int rowCount(const QModelIndex& index) const override;
@@ -50,7 +52,7 @@ public:
    void addTopLevelItem(TreeItem* child);
    void addItem(TreeItem* parent, TreeItem* child);
 
-   std::shared_ptr<TreeItem> rootItem() const;
+   TreeItem* rootItem() const;
 
    Q_INVOKABLE QModelIndex rootIndex();
    Q_INVOKABLE int depth(const QModelIndex& index) const;
@@ -60,5 +62,7 @@ private:
    TreeItem* internalPointer(const QModelIndex& index) const;
 
 private:
-   std::shared_ptr<TreeItem> _rootItem;
+   TreeItem* _rootItem;
 };
+
+#endif // QML_TREEVIEW_TREE_MODEL_H
