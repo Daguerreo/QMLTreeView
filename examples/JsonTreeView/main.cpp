@@ -2,17 +2,16 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include <QJsonDocument>
+#include <QFile>
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 
 #include "tree_model.h"
 #include "json_entry.h"
 
-
 void loadValue(const QJsonValue& value, TreeItem* parent, TreeModel* model)
 {
-
    if(value.isObject()) {
       auto object = value.toObject();
       for(auto it=object.begin(); it!=object.end(); ++it){
@@ -53,44 +52,21 @@ void loadValue(const QJsonValue& value, TreeItem* parent, TreeModel* model)
    }
 }
 
-TreeModel* populateJson()
+void populateModel(TreeModel& model)
 {
-   QString json = R"(
-   {
-      "firstName": "John",
-      "lastName": "Smith",
-      "age": 25,
-      "address": {
-         "streetAddress": "21 2nd Street",
-         "city": "New York",
-         "state": "NY",
-         "postalCode": "10021",
-         "owner": true
-      },
-      "phoneNumber": [
-         {
-           "type": "home",
-           "number": "212 555-1234"
-         },
-         {
-           "type": "fax",
-           "number": "646 555-4567"
-         }
-      ]
-   })";
+   QFile jsonFile{":/sample.json"};
+   if(!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+      qCritical() << "error: json file cannot be open";
+      return;
+   }
 
    QJsonParseError error;
-   auto doc = QJsonDocument::fromJson(json.toUtf8(), &error);
-   qDebug() << error.errorString();
-
-   auto jsonModel = new TreeModel();
+   auto doc = QJsonDocument::fromJson(jsonFile.readAll(), &error);
+   qDebug() << "loading json file:" << error.errorString();
 
    auto root = doc.isArray() ? QJsonValue(doc.array()) : QJsonValue(doc.object());
-   loadValue(root, jsonModel->rootItem().get(), jsonModel);
-
-   return jsonModel;
+   loadValue(root, model.rootItem(), &model);
 }
-
 
 
 int main(int argc, char *argv[]) {
@@ -98,10 +74,11 @@ int main(int argc, char *argv[]) {
    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
    QGuiApplication app(argc, argv);
-
-   auto jsonModel = populateJson();
-
    QQmlApplicationEngine engine;
+
+   auto jsonModel = new TreeModel(&engine);
+   populateModel(*jsonModel);
+
    engine.rootContext()->setContextProperty("jsonModel", jsonModel);
    const QUrl url(QStringLiteral("qrc:/main.qml"));
    QObject::connect(
