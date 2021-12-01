@@ -96,12 +96,14 @@ QVariant TreeModel::data(const QModelIndex& index, const int role) const
 
 void TreeModel::addTopLevelItem(TreeItem* child)
 {
-   addItem(_rootItem, child);
+   if(child){
+      addItem(_rootItem, child);
+   }
 }
 
 void TreeModel::addItem(TreeItem* parent, TreeItem* child)
 {
-   if(!child){
+   if(!child || !parent){
       return;
    }
 
