@@ -25,8 +25,6 @@
 #ifndef QML_TREEVIEW_TREE_MODEL_H
 #define QML_TREEVIEW_TREE_MODEL_H
 
-#include <memory>
-
 #include <QAbstractItemModel>
 
 #include "tree_item.h"
