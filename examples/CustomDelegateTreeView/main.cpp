@@ -4,7 +4,7 @@
 
 #include "tree_model.h"
 
-TreeModel* populateModel()
+void populateModel(TreeModel& model)
 {
    auto parent1 = new TreeItem("Parent1");
    auto parent2 = new TreeItem("Parent2");
@@ -21,23 +21,20 @@ TreeModel* populateModel()
    auto grateChild1 = new TreeItem("GreateChild1");
    auto grateChild2 = new TreeItem("GreateChild2");
 
-   auto treeModel = new TreeModel();
-   treeModel->addTopLevelItem(parent1);
-   treeModel->addTopLevelItem(parent2);
-   treeModel->addTopLevelItem(parent3);
-   treeModel->addTopLevelItem(parent4);
-   treeModel->addTopLevelItem(parent5);
-   treeModel->addTopLevelItem(parent6);
+   model.addTopLevelItem(parent1);
+   model.addTopLevelItem(parent2);
+   model.addTopLevelItem(parent3);
+   model.addTopLevelItem(parent4);
+   model.addTopLevelItem(parent5);
+   model.addTopLevelItem(parent6);
 
-   treeModel->addItem(parent1, child1);
-   treeModel->addItem(parent1, child2);
-   treeModel->addItem(parent1, child3);
-   treeModel->addItem(child1, grandChild1);
-   treeModel->addItem(child1, grandChild2);
-   treeModel->addItem(grandChild1, grateChild1);
-   treeModel->addItem(grandChild1, grateChild2);
-
-   return treeModel;
+   model.addItem(parent1, child1);
+   model.addItem(parent1, child2);
+   model.addItem(parent1, child3);
+   model.addItem(child1, grandChild1);
+   model.addItem(child1, grandChild2);
+   model.addItem(grandChild1, grateChild1);
+   model.addItem(grandChild1, grateChild2);
 }
 
 int main(int argc, char *argv[]) {
@@ -45,10 +42,11 @@ int main(int argc, char *argv[]) {
    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
    QGuiApplication app(argc, argv);
-
-   auto treeModel = populateModel();
-
    QQmlApplicationEngine engine;
+
+   auto treeModel = new TreeModel(&engine);
+   populateModel(*treeModel);
+
    engine.rootContext()->setContextProperty("treeModel", treeModel);
    const QUrl url(QStringLiteral("qrc:/main.qml"));
    QObject::connect(
