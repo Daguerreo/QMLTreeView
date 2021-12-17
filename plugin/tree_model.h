@@ -49,6 +49,7 @@ public:
 public:
    void addTopLevelItem(TreeItem* child);
    void addItem(TreeItem* parent, TreeItem* child);
+   void removeItem(TreeItem* item);
 
    TreeItem* rootItem() const;
 

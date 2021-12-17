@@ -78,6 +78,10 @@ QModelIndex TreeModel::parent(const QModelIndex& index) const
    TreeItem* childItem = internalPointer(index);
    TreeItem* parentItem = childItem->parentItem();
 
+   if (!parentItem){
+      return {};
+   }
+
    if (parentItem == _rootItem){
       return {};
    }
@@ -123,6 +127,23 @@ void TreeModel::addItem(TreeItem* parent, TreeItem* child)
    emit layoutChanged();
 }
 
+void TreeModel::removeItem(TreeItem* item)
+{
+   if(!item){
+      return;
+   }
+
+   emit layoutAboutToBeChanged();
+
+   if (item->parentItem()) {
+      beginRemoveRows(QModelIndex(), item->parentItem()->childCount() - 1, item->parentItem()->childCount());
+      item->parentItem()->removeChild(item);
+      endRemoveRows();
+   }
+
+   emit layoutChanged();
+}
+
 TreeItem* TreeModel::rootItem() const
 {
    return _rootItem;
@@ -137,6 +158,9 @@ int TreeModel::depth(const QModelIndex& index) const
 {
    int count = 0;
    auto anchestor = index;
+   if(!index.isValid()){
+      return 0;
+   }
    while(anchestor.parent().isValid()){
       anchestor = anchestor.parent();
       ++count;
@@ -147,10 +171,12 @@ int TreeModel::depth(const QModelIndex& index) const
 
 void TreeModel::clear()
 {
+   emit layoutAboutToBeChanged();
    beginResetModel();
    delete _rootItem;
    _rootItem = new TreeItem();
    endResetModel();
+   emit layoutChanged();
 }
 
 TreeItem* TreeModel::internalPointer(const QModelIndex& index) const

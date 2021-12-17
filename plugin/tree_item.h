@@ -45,6 +45,7 @@ public:
    int childCount() const;
    int row() const;
    bool isLeaf() const;
+   int depth() const;
 
 private:
    TreeItem* parentItem();
