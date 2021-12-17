@@ -91,6 +91,18 @@ bool TreeItem::isLeaf() const
    return _childItems.isEmpty();
 }
 
+int TreeItem::depth() const
+{
+   int depth = 0;
+   TreeItem* anchestor = _parentItem;
+   while(anchestor){
+      ++depth;
+      anchestor = anchestor->parentItem();
+   }
+
+   return depth;
+}
+
 int TreeItem::row() const
 {
    if (_parentItem){

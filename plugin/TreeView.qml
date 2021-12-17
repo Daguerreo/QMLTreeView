@@ -31,6 +31,10 @@ import QtQml 2.15
 Flickable {
     id: root
 
+    implicitWidth: 400
+    implicitHeight: 400
+    clip: true
+
     property var model
     readonly property alias currentIndex: tree.selectedIndex
     readonly property alias currentItem: tree.currentItem
@@ -70,7 +74,7 @@ Flickable {
     property int handleStyle: TreeView.Handle.Triangle
 
     contentHeight: tree.height
-    contentWidth: parent.width
+    contentWidth: width
     boundsBehavior: Flickable.StopAtBounds
     ScrollBar.vertical: ScrollBar {}
 
@@ -91,6 +95,14 @@ Flickable {
         selectedItemColor: root.selectedItemColor
         defaultIndicator: indicatorToString(handleStyle)
         z: 1
+
+        Connections {
+           target: root.model
+           ignoreUnknownSignals: true
+           function onLayoutChanged() {
+               tree.childCount = root.model.rowCount(0, 0, model.rootIndex())
+           }
+        }
     }
 
     Loader {

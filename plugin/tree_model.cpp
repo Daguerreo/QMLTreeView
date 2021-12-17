@@ -78,6 +78,10 @@ QModelIndex TreeModel::parent(const QModelIndex& index) const
    TreeItem* childItem = internalPointer(index);
    TreeItem* parentItem = childItem->parentItem();
 
+   if (!parentItem){
+      return {};
+   }
+
    if (parentItem == _rootItem){
       return {};
    }
@@ -137,6 +141,9 @@ int TreeModel::depth(const QModelIndex& index) const
 {
    int count = 0;
    auto anchestor = index;
+   if(!index.isValid()){
+      return 0;
+   }
    while(anchestor.parent().isValid()){
       anchestor = anchestor.parent();
       ++count;
@@ -147,10 +154,12 @@ int TreeModel::depth(const QModelIndex& index) const
 
 void TreeModel::clear()
 {
+   emit layoutAboutToBeChanged();
    beginResetModel();
    delete _rootItem;
    _rootItem = new TreeItem();
    endResetModel();
+   emit layoutChanged();
 }
 
 TreeItem* TreeModel::internalPointer(const QModelIndex& index) const

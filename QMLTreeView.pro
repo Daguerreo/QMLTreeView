@@ -7,4 +7,11 @@ SUBDIRS += \
    examples/CustomDelegateTreeView \
    examples/JsonTreeView \
    examples/SimpleTreeView \
-   examples/StyledTreeView
+   examples/StyledTreeView \
+   examples/TreeManipulation
+
+HEADERS += \
+   plugin/treemanipulator.h
+
+SOURCES += \
+   plugin/treemanipulator.cpp
