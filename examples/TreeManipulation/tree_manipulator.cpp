@@ -8,6 +8,11 @@ TreeManipulator::TreeManipulator(TreeModel& model, QObject* parent)
 {
 }
 
+QVariant TreeManipulator::sourceModel() const
+{
+   return QVariant::fromValue(_model);
+}
+
 void TreeManipulator::addTopLevelItem(const QString& data)
 {
    _model->addTopLevelItem(new TreeItem(data));

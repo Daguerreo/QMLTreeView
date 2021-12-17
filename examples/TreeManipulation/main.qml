@@ -20,7 +20,7 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            model: treeModel
+            model: treeManipulator.sourceModel()
             selectionEnabled: true
 
             onCurrentIndexChanged: if(currentIndex) console.log("current index is (row=" + currentIndex.row + ", depth=" + model.depth(currentIndex) + ")")

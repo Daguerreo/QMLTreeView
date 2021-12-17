@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
    auto treeModel = new TreeModel(&engine);
    auto treeManipulator = new TreeManipulator(*treeModel, &engine);
 
-   engine.rootContext()->setContextProperty("treeModel", treeModel);
    engine.rootContext()->setContextProperty("treeManipulator", QVariant::fromValue(treeManipulator));
 
    const QUrl url(QStringLiteral("qrc:/main.qml"));
