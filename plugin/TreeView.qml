@@ -100,7 +100,7 @@ Flickable {
            target: root.model
            ignoreUnknownSignals: true
            function onLayoutChanged() {
-               tree.childCount = root.model.rowCount(0, 0, model.rootIndex())
+               if(root.model) tree.childCount = root.model.rowCount(tree.parentIndex)
            }
         }
     }

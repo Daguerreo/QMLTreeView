@@ -23,9 +23,10 @@ Window {
             model: treeModel
             selectionEnabled: true
 
-            onCurrentIndexChanged: console.log("current index is (row=" + currentIndex.row + ", depth=" + model.depth(currentIndex) + ")")
-            onCurrentDataChanged: console.log("current data is " + currentData)
-            onCurrentItemChanged: console.log("current item is " + currentItem)
+            onCurrentIndexChanged: if(currentIndex) console.log("current index is (row=" + currentIndex.row + ", depth=" + model.depth(currentIndex) + ")")
+            onCurrentDataChanged: if(currentData) console.log("current data is " + currentData)
+            onCurrentItemChanged: if(currentItem) console.log("current item is " + currentItem)
+
         }
 
         ColumnLayout {
