@@ -25,7 +25,12 @@ void TreeManipulator::addItem(const QModelIndex& index, const QString& data)
 
 void TreeManipulator::removeItem(const QModelIndex& index)
 {
+   if(!index.isValid()){
+      return;
+   }
 
+   auto item = static_cast<TreeItem*>(index.internalPointer());
+   _model->removeItem(item);
 }
 
 void TreeManipulator::reset()

@@ -7,7 +7,7 @@ Window {
     width: 500
     height: 400
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Tree Manipulation")
 
 
     ColumnLayout {
@@ -77,7 +77,13 @@ Window {
                 Button {
                     id: delBtn
                     text: "Remove item"
+                    enabled: treeView.currentItem
+
+                    onClicked: {
+                        treeManipulator.removeItem(treeView.currentIndex)
+                    }
                 }
+
                 Button {
                     id: clearBtn
                     text: "Clear"

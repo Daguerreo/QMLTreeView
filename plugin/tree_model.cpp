@@ -127,6 +127,23 @@ void TreeModel::addItem(TreeItem* parent, TreeItem* child)
    emit layoutChanged();
 }
 
+void TreeModel::removeItem(TreeItem* item)
+{
+   if(!item){
+      return;
+   }
+
+   emit layoutAboutToBeChanged();
+
+   if (item->parentItem()) {
+      beginRemoveRows(QModelIndex(), item->parentItem()->childCount() - 1, item->parentItem()->childCount());
+      item->parentItem()->removeChild(item);
+      endRemoveRows();
+   }
+
+   emit layoutChanged();
+}
+
 TreeItem* TreeModel::rootItem() const
 {
    return _rootItem;

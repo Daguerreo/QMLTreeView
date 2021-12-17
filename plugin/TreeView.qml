@@ -78,7 +78,7 @@ Flickable {
     boundsBehavior: Flickable.StopAtBounds
     ScrollBar.vertical: ScrollBar {}
 
-    Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
+    Connections { function onCurrentIndexChanged() { if(currentIndex) currentData = model.data(currentIndex) }  }
 
     TreeViewItem {
         id: tree
@@ -100,7 +100,7 @@ Flickable {
            target: root.model
            ignoreUnknownSignals: true
            function onLayoutChanged() {
-               if(root.model) tree.childCount = root.model.rowCount(tree.parentIndex)
+               tree.childCount = root.model ? root.model.rowCount(tree.parentIndex) : 0
            }
         }
     }
@@ -124,13 +124,13 @@ Flickable {
 
     function indicatorToString(handle){
         switch (handle){
-        case TreeView.Handle.Triangle: return "▶";
-        case TreeView.Handle.TriangleSmall: return "►";
-        case TreeView.Handle.TriangleOutline: return "▷";
-        case TreeView.Handle.TriangleSmallOutline: return "⊳";
-        case TreeView.Handle.Chevron: return "❱";
-        case TreeView.Handle.Arrow: return "➤";
-        default: return "▶";
+            case TreeView.Handle.Triangle: return "▶";
+            case TreeView.Handle.TriangleSmall: return "►";
+            case TreeView.Handle.TriangleOutline: return "▷";
+            case TreeView.Handle.TriangleSmallOutline: return "⊳";
+            case TreeView.Handle.Chevron: return "❱";
+            case TreeView.Handle.Arrow: return "➤";
+            default: return "▶";
         }
     }
 }
