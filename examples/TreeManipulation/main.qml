@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 
 Window {
-    width: 500
+    width: 600
     height: 400
     visible: true
     title: qsTr("Tree Manipulation")
@@ -84,9 +84,21 @@ Window {
                     }
                 }
 
+
+                Button {
+                    id: editBtn
+                    text: "Edit item"
+                    enabled: txtEdit.notEmpty() && treeView.currentItem
+
+                    onClicked: {
+                        treeManipulator.editItem(treeView.currentIndex, txtEdit.text)
+                        txtEdit.clear()
+                    }
+                }
+
                 Button {
                     id: clearBtn
-                    text: "Clear"
+                    text: "Clear tree"
 
                     onClicked:  {
                         treeManipulator.reset();

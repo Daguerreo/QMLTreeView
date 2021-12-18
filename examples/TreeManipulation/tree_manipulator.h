@@ -20,6 +20,7 @@ public:
    Q_INVOKABLE void addTopLevelItem(const QString& data);
    Q_INVOKABLE void addItem(const QModelIndex& index, const QString& data);
    Q_INVOKABLE void removeItem(const QModelIndex& index);
+   Q_INVOKABLE void editItem(const QModelIndex& index, const QString& data);
    Q_INVOKABLE void reset();
 
 private:

@@ -98,6 +98,20 @@ QVariant TreeModel::data(const QModelIndex& index, const int role) const
    return internalPointer(index)->data();
 }
 
+bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int /*role*/)
+{
+   if(!index.isValid()){
+      return false;
+   }
+
+   if(auto item = internalPointer(index)){
+      item->setData(value);
+      emit dataChanged(index, index, {Qt::EditRole});
+   }
+
+   return false;
+}
+
 void TreeModel::addTopLevelItem(TreeItem* child)
 {
    if(child){

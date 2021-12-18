@@ -38,6 +38,15 @@ void TreeManipulator::removeItem(const QModelIndex& index)
    _model->removeItem(item);
 }
 
+void TreeManipulator::editItem(const QModelIndex& index, const QString& data)
+{
+   if(!index.isValid()){
+      return;
+   }
+
+   _model->setData(index, data);
+}
+
 void TreeManipulator::reset()
 {
    _model->clear();

@@ -186,6 +186,18 @@ Item {
                      height: rowHeight
 
                      property QtObject currentRow: _prop
+
+                     Connections {
+                        target: root.model
+                        ignoreUnknownSignals: true
+                        function onDataChanged(modelIndex) {
+                           const changedId = modelIndex.internalId
+                           const currentId = _prop.currentIndex.internalId
+                           if(changedId === currentId){
+                               contentItemLoader.currentRow.currentData = root.model.data(modelIndex);
+                           }
+                        }
+                     }
                   }
 
                   TapHandler {
