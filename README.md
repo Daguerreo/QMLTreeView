@@ -226,6 +226,12 @@ Data access for row element is provided by the properties:
 - ```currentData```: return the data for the selected element
 - ```currentItem```: return the visual item of the selected element
 
+## Node Manipulation
+
+```TreeModel``` provides the methods ```addTopLevelItem,``` ```addItem```, ```removeItem``` and ```clear``` to add and remove node to the tree. ```setData``` instead provides a way to change the data of a given node.
+Take a look at the **Manipulator Example** which show a way to manipulate the tree directly from QML.
+
+![](img/manipulation.png)
 
 ## Customizing Models
 
