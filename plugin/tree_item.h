@@ -28,23 +28,41 @@
 #include <QVariant>
 
 /*!
- * This class represents a node of the TreeModel
+ * This class represents a node of the TreeModel.
+ * The items are meant to be managed from the TreeModel, thus is only allowed
+ * to modify the stored data.
+ * Parenting and deletion are dealt from the TreeModel. Deleting a TreeItem
+ * will call the delete for each child node.
  */
 class TreeItem
 {
    friend class TreeModel;
 
 public:
+   //! Create an empty item.
    TreeItem();
+
+   //! Create an item with the given data.
    explicit TreeItem(const QVariant& data);
+
+   //! Destroy the item. It will destroy every child.
    ~TreeItem();
 
+   //! Return the stored data of the node.
    const QVariant& data() const;
+
+   //! Set the internal data of the node.
    void setData(const QVariant& data);
 
+   //! Return the number of children nodes.
    int childCount() const;
+
    int row() const;
+
+   //! Return true if the node is a leaf node (no children).
    bool isLeaf() const;
+
+   //! Return the depth of this node inside the tree.
    int depth() const;
 
 private:
