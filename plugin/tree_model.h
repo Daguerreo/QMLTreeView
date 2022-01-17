@@ -45,10 +45,12 @@ public:
    QModelIndex parent(const QModelIndex& childIndex) const override;
 
    QVariant data(const QModelIndex& index, int role = 0) const override;
+   bool setData(const QModelIndex& index, const QVariant& value, int role=Qt::EditRole) override;
 
 public:
    void addTopLevelItem(TreeItem* child);
    void addItem(TreeItem* parent, TreeItem* child);
+   void removeItem(TreeItem* item);
 
    TreeItem* rootItem() const;
 

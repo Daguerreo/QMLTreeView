@@ -31,6 +31,10 @@ import QtQml 2.15
 Flickable {
     id: root
 
+    implicitWidth: 400
+    implicitHeight: 400
+    clip: true
+
     property var model
     readonly property alias currentIndex: tree.selectedIndex
     readonly property alias currentItem: tree.currentItem
@@ -70,11 +74,11 @@ Flickable {
     property int handleStyle: TreeView.Handle.Triangle
 
     contentHeight: tree.height
-    contentWidth: parent.width
+    contentWidth: width
     boundsBehavior: Flickable.StopAtBounds
     ScrollBar.vertical: ScrollBar {}
 
-    Connections { function onCurrentIndexChanged() { currentData = model.data(currentIndex) }  }
+    Connections { function onCurrentIndexChanged() { if(currentIndex) currentData = model.data(currentIndex) }  }
 
     TreeViewItem {
         id: tree
@@ -91,6 +95,14 @@ Flickable {
         selectedItemColor: root.selectedItemColor
         defaultIndicator: indicatorToString(handleStyle)
         z: 1
+
+        Connections {
+           target: root.model
+           ignoreUnknownSignals: true
+           function onLayoutChanged() {
+               tree.childCount = root.model ? root.model.rowCount(tree.parentIndex) : 0
+           }
+        }
     }
 
     Loader {
@@ -112,13 +124,13 @@ Flickable {
 
     function indicatorToString(handle){
         switch (handle){
-        case TreeView.Handle.Triangle: return "▶";
-        case TreeView.Handle.TriangleSmall: return "►";
-        case TreeView.Handle.TriangleOutline: return "▷";
-        case TreeView.Handle.TriangleSmallOutline: return "⊳";
-        case TreeView.Handle.Chevron: return "❱";
-        case TreeView.Handle.Arrow: return "➤";
-        default: return "▶";
+            case TreeView.Handle.Triangle: return "▶";
+            case TreeView.Handle.TriangleSmall: return "►";
+            case TreeView.Handle.TriangleOutline: return "▷";
+            case TreeView.Handle.TriangleSmallOutline: return "⊳";
+            case TreeView.Handle.Chevron: return "❱";
+            case TreeView.Handle.Arrow: return "➤";
+            default: return "▶";
         }
     }
 }

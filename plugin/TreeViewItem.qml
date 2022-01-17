@@ -128,7 +128,7 @@ Item {
                property Item currentItem: repeater.itemAt(index)
                property bool expanded: false
                property bool selected: false
-               readonly property int itemChildCount: root.model.rowCount(currentIndex)
+               property int itemChildCount: root.model.rowCount(currentIndex)
                readonly property int depth: root.model.depth(currentIndex)
                readonly property bool hasChildren: itemChildCount > 0
                readonly property bool isSelectedIndex: root.selectionEnabled && currentIndex === root.selectedIndex
@@ -136,6 +136,16 @@ Item {
                readonly property bool isSelectedAndHoveredIndex: hoverEnabled && selectionEnabled && isHoveredIndex && isSelectedIndex
 
                function toggle(){ if(_prop.hasChildren) _prop.expanded = !_prop.expanded }
+
+            }
+
+            Connections {
+               target: root.model
+               ignoreUnknownSignals: true
+               function onLayoutChanged() {
+                   const parent = root.model.index(index, 0, parentIndex)
+                  _prop.itemChildCount = root.model.rowCount(parent)
+               }
             }
 
             Item {
@@ -176,6 +186,18 @@ Item {
                      height: rowHeight
 
                      property QtObject currentRow: _prop
+
+                     Connections {
+                        target: root.model
+                        ignoreUnknownSignals: true
+                        function onDataChanged(modelIndex) {
+                           const changedId = modelIndex.internalId
+                           const currentId = _prop.currentIndex.internalId
+                           if(changedId === currentId){
+                               contentItemLoader.currentRow.currentData = root.model.data(modelIndex);
+                           }
+                        }
+                     }
                   }
 
                   TapHandler {
@@ -230,6 +252,16 @@ Item {
                   item.childCount = _prop.itemChildCount
                }
 
+               Connections {
+                  target: root.model
+                  ignoreUnknownSignals: true
+                  function onLayoutChanged() {
+                     const parent = root.model.index(index, 0, parentIndex)
+                     loader.item.childCount = root.model.rowCount(parent)
+                  }
+               }
+
+               Binding { target: loader.item; property: "model"; value: root.model; when: loader.status == Loader.Ready }
                Binding { target: loader.item; property: "handle"; value: root.handle; when: loader.status == Loader.Ready }
                Binding { target: loader.item; property: "contentItem"; value: root.contentItem; when: loader.status == Loader.Ready }
 
