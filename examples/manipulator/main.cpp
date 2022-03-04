@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
 #endif
    QGuiApplication app(argc, argv);
    QQmlApplicationEngine engine;
+   engine.addImportPath("qrc:/modules");
 
    auto treeModel = new TreeModel(&engine);
    auto treeManipulator = new TreeManipulator(*treeModel, &engine);

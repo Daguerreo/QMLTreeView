@@ -2,13 +2,15 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 
+import QMLTreeView 1.0
+
 Window {
    id: root
 
    visible: true
    width: 400
    height: 400
-   title: qsTr("TreeView with TreeModel")
+   title: qsTr("Custom Delegate")
 
    Rectangle {
       anchors.fill: parent
