@@ -12,13 +12,7 @@ Window {
    height: 400
    title: qsTr("Custom Delegate")
 
-   Rectangle {
-      anchors.fill: parent
-      border.width: 1
-      border.color: "black"
-      clip: true
-
-      TreeView {
+   TreeView {
          id: delegateTreeView
          anchors.fill: parent
          anchors.margins: 1
@@ -89,6 +83,6 @@ Window {
          onCurrentDataChanged: console.log("current data is " + currentData)
          onCurrentItemChanged: console.log("current item is " + currentItem)
       }
-   }
+
 
 }

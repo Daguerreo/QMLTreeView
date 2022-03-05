@@ -1,8 +1,6 @@
-# QMLTreeView
+# QMLTreeView 1.0
 
 This project provides a **QML Tree View** with a **C++ Tree Model** for **Qt 5.15** and **QuickControls 2**.
-
-The project is still in beta, so breaking change can happen and backward compatibility is still not guaranteed.
 
 ## Features
  - QML Tree View
@@ -22,19 +20,23 @@ The project is still in beta, so breaking change can happen and backward compati
 ```
 int main()
 {
-   auto parent1 = new TreeItem("Parent1");
-   auto parent2 = new TreeItem("Parent2");
-   auto child1 = new TreeItem("Child1");
-   auto grandChild1 = new TreeItem("GrandChild1");
-   
+   auto america = new TreeItem("America");
+   auto asia = new TreeItem("Asia");
+   auto europe = new TreeItem("Europe");  
+   auto brazil = new TreeItem("Brazil");
+   auto canada = new TreeItem("Canada");
+   auto italy = new TreeItem("Italy");
+   auto portugal = new TreeItem("Portugal");
+
    auto treeModel = new TreeModel();
-   auto root = treeModel->rootItem().get();
-   treeModel->addItem(root, parent1);
-   treeModel->addItem(root, parent2);
-   treeModel->addItem(parent1, child1);
-   treeModel->addItem(child1, grandChild1);
-   treeModel->addItem(child1, grandChild2);
-   
+   model.addTopLevelItem(america);
+   model.addTopLevelItem(asia);
+   model.addTopLevelItem(europe);
+   model.addItem(america, brazil);
+   model.addItem(america, canada);
+   model.addItem(europe, italy);
+   model.addItem(europe, portugal);
+
    QQmlApplicationEngine engine;
    engine.rootContext()->setContextProperty("treeModel", treeModel);
    engine.load(url);
@@ -56,7 +58,7 @@ Expose and populate the TreeModel from C++, then just initialize it
 ```
 and this is the result
 
-![](img/treeview01.png)
+![](img/minimal.png)
 
 
 # Platforms
@@ -66,6 +68,14 @@ Code has been tested in the following OS:
 
 - Windows
 - Linux
+
+# Installation
+
+- Copy the ```modules``` folder to your project, then add the ```qmltreeview.pri``` file or manually add headers, source and
+resource file. 
+- Add the modules path to the ```QML_IMPORT_PATH```.
+- In the main file add the import path to the engine with ```engine.addImportPath("qrc:/modules");```
+- In the QML file you can include the module with ```import QMLTreeView 1.0```
 
 # Customization
 
@@ -82,7 +92,7 @@ Hovering and selection can be activated enabling the respective properties
     }
 ```
 
-![](img/treeview02.png)
+![](img/selection.png)
 
 ## Styling
 
@@ -109,7 +119,7 @@ TreeView support color styling for each part. Positioning can be customized with
     }
 ```
 
-![](img/treeview03.png)
+![](img/styled.png)
 
 Font can be customized through properties ```font``` and ```fontMetrics```.
 
@@ -217,7 +227,7 @@ TreeView {
     }
 }
 ```
-![](img/treeview04.png)
+![](img/customdelegate.png)
 
 ## Data Access
 
@@ -231,7 +241,7 @@ Data access for row element is provided by the properties:
 ```TreeModel``` provides the methods ```addTopLevelItem,``` ```addItem```, ```removeItem``` and ```clear``` to add and remove node to the tree. ```setData``` instead provides a way to change the data of a given node.
 Take a look at the **Manipulator Example** which show a way to manipulate the tree directly from QML.
 
-![](img/manipulation.png)
+![](img/manipulator.png)
 
 ## Customizing Models
 
@@ -296,4 +306,4 @@ TreeView {
 }
 ```
 
-![](img/treeview05.png)
+![](img/json.png)

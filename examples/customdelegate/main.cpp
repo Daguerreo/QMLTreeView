@@ -6,35 +6,33 @@
 
 void populateModel(TreeModel& model)
 {
-   auto parent1 = new TreeItem("Parent1");
-   auto parent2 = new TreeItem("Parent2");
-   auto parent3 = new TreeItem("Parent3");
-   auto parent4 = new TreeItem("Parent4");
-   auto parent5 = new TreeItem("Parent5");
-   auto parent6 = new TreeItem("Parent6");
+   auto america = new TreeItem("America");
+   auto asia = new TreeItem("Asia");
+   auto europe = new TreeItem("Europe");
+   auto oceania = new TreeItem("Oceania");
 
-   auto child1 = new TreeItem("Child1");
-   auto child2 = new TreeItem("Child2");
-   auto child3 = new TreeItem("Child3");
-   auto grandChild1 = new TreeItem("GrandChild1");
-   auto grandChild2 = new TreeItem("GrandChild2");
-   auto grateChild1 = new TreeItem("GreateChild1");
-   auto grateChild2 = new TreeItem("GreateChild2");
+   auto brazil = new TreeItem("Brazil");
+   auto canada = new TreeItem("Canada");
+   auto mexico = new TreeItem("Mexico");
+   auto usa = new TreeItem("USA");
 
-   model.addTopLevelItem(parent1);
-   model.addTopLevelItem(parent2);
-   model.addTopLevelItem(parent3);
-   model.addTopLevelItem(parent4);
-   model.addTopLevelItem(parent5);
-   model.addTopLevelItem(parent6);
+   auto italy = new TreeItem("Italy");
+   auto france = new TreeItem("France");
+   auto portugal = new TreeItem("Portugal");
+   auto spain = new TreeItem("Spain");
 
-   model.addItem(parent1, child1);
-   model.addItem(parent1, child2);
-   model.addItem(parent1, child3);
-   model.addItem(child1, grandChild1);
-   model.addItem(child1, grandChild2);
-   model.addItem(grandChild1, grateChild1);
-   model.addItem(grandChild1, grateChild2);
+   model.addTopLevelItem(america);
+   model.addTopLevelItem(asia);
+   model.addTopLevelItem(europe);
+   model.addTopLevelItem(oceania);
+   model.addItem(america, brazil);
+   model.addItem(america, canada);
+   model.addItem(america, mexico);
+   model.addItem(america, usa);
+   model.addItem(europe, italy);
+   model.addItem(europe, france);
+   model.addItem(europe, portugal);
+   model.addItem(europe, spain);
 }
 
 int main(int argc, char *argv[]) {
