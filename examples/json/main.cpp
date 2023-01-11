@@ -75,6 +75,7 @@ int main(int argc, char *argv[]) {
 #endif
    QGuiApplication app(argc, argv);
    QQmlApplicationEngine engine;
+   engine.addImportPath("qrc:/modules");
 
    auto jsonModel = new TreeModel(&engine);
    populateModel(*jsonModel);

@@ -2,21 +2,17 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 
+import QMLTreeView 1.0
+
 Window {
    id: root
 
    visible: true
    width: 400
    height: 400
-   title: qsTr("TreeView with TreeModel")
+   title: qsTr("Custom Delegate")
 
-   Rectangle {
-      anchors.fill: parent
-      border.width: 1
-      border.color: "black"
-      clip: true
-
-      TreeView {
+   TreeView {
          id: delegateTreeView
          anchors.fill: parent
          anchors.margins: 1
@@ -87,6 +83,6 @@ Window {
          onCurrentDataChanged: console.log("current data is " + currentData)
          onCurrentItemChanged: console.log("current item is " + currentItem)
       }
-   }
+
 
 }

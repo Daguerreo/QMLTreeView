@@ -1,7 +1,12 @@
 TEMPLATE = subdirs
 
+
 SUBDIRS += \
-   examples
+   minimal \
+   styled \
+   customdelegate \
+   json \
+   manipulator
 
 DISTFILES += \
    $$files(modules/QMLTreeView/*)
