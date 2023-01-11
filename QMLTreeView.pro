@@ -3,5 +3,6 @@ TEMPLATE = subdirs
 SUBDIRS += \
    examples
 
-DISTFILES += \
-   $$files(modules/QMLTreeView/*)
+OTHER_FILES += \
+   $$files(modules/QMLTreeView/*) \
+   README.md
