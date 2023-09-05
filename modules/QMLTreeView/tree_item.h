@@ -36,48 +36,48 @@
  */
 class TreeItem
 {
-   friend class TreeModel;
+    friend class TreeModel;
 
 public:
-   //! Create an empty item.
-   TreeItem();
+    //! Create an empty item.
+    TreeItem();
 
-   //! Create an item with the given data.
-   explicit TreeItem(const QVariant& data);
+    //! Create an item with the given data.
+    explicit TreeItem(const QVariant& data);
 
-   //! Destroy the item. It will destroy every child.
-   ~TreeItem();
+    //! Destroy the item. It will destroy every child.
+    ~TreeItem();
 
-   //! Return the stored data of the node.
-   const QVariant& data() const;
+    //! Return the stored data of the node.
+    const QVariant& data() const;
 
-   //! Set the internal data of the node.
-   void setData(const QVariant& data);
+    //! Set the internal data of the node.
+    void setData(const QVariant& data);
 
-   //! Return the number of children nodes.
-   int childCount() const;
+    //! Return the number of children nodes.
+    int childCount() const;
 
-   int row() const;
+    int row() const;
 
-   //! Return true if the node is a leaf node (no children).
-   bool isLeaf() const;
+    //! Return true if the node is a leaf node (no children).
+    bool isLeaf() const;
 
-   //! Return the depth of this node inside the tree.
-   int depth() const;
-
-private:
-   TreeItem* parentItem();
-   void setParentItem(TreeItem* parentItem);
-
-   void appendChild(TreeItem* item);
-   void removeChild(TreeItem* item);
-
-   TreeItem* child(int row);
+    //! Return the depth of this node inside the tree.
+    int depth() const;
 
 private:
-   QVariant _itemData;
-   TreeItem* _parentItem;
-   QVector<TreeItem*> _childItems;
+    TreeItem* parentItem();
+    void setParentItem(TreeItem* parentItem);
+
+    void appendChild(TreeItem* item);
+    void removeChild(TreeItem* item);
+
+    TreeItem* child(int row);
+
+private:
+    QVariant _itemData;
+    TreeItem* _parentItem;
+    QVector<TreeItem*> _childItems;
 };
 
 #endif // QML_TREEVIEW_TREE_ITEM_H

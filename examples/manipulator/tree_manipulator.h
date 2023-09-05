@@ -11,20 +11,20 @@ class TreeModel;
  */
 class TreeManipulator : public QObject
 {
-   Q_OBJECT
+    Q_OBJECT
 
 public:
-   explicit TreeManipulator(TreeModel& model, QObject* parent = nullptr);
+    explicit TreeManipulator(TreeModel& model, QObject* parent = nullptr);
 
-   Q_INVOKABLE QVariant sourceModel() const;
-   Q_INVOKABLE void addTopLevelItem(const QString& data);
-   Q_INVOKABLE void addItem(const QModelIndex& index, const QString& data);
-   Q_INVOKABLE void removeItem(const QModelIndex& index);
-   Q_INVOKABLE void editItem(const QModelIndex& index, const QString& data);
-   Q_INVOKABLE void reset();
+    Q_INVOKABLE QVariant sourceModel() const;
+    Q_INVOKABLE void addTopLevelItem(const QString& data);
+    Q_INVOKABLE void addItem(const QModelIndex& index, const QString& data);
+    Q_INVOKABLE void removeItem(const QModelIndex& index);
+    Q_INVOKABLE void editItem(const QModelIndex& index, const QString& data);
+    Q_INVOKABLE void reset();
 
 private:
-   TreeModel* _model;
+    TreeModel* _model;
 };
 
 #endif // TREE_MANIPULATOR_H
