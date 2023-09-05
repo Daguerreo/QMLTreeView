@@ -2,8 +2,8 @@
 
 This project provides a **QML Tree View** with a **C++ Tree Model** for **Qt 5.15** and **QuickControls 2**.
 
-Since **Qt 6.3** [TreeView](https://doc.qt.io/qt-6/qml-qtquick-treeview.html) it's a standard component with easy use,
-so refers to that for Qt 6.
+Since **Qt 6.3** [TreeView](https://doc.qt.io/qt-6/qml-qtquick-treeview.html) has been added as standard component.
+It is suggested to use the standard one.
 
 ## Features
  - QML Tree View
