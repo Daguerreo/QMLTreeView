@@ -126,12 +126,12 @@ void TreeModel::addItem(TreeItem* parent, TreeItem* child)
     emit layoutAboutToBeChanged();
 
     if (child->parentItem()) {
-        beginRemoveRows(QModelIndex(), child->parentItem()->childCount() - 1, child->parentItem()->childCount());
+        beginRemoveRows(QModelIndex(), qMax(parent->childCount() - 1, 0), qMax(parent->childCount(), 0));
         child->parentItem()->removeChild(child);
         endRemoveRows();
     }
 
-    beginInsertRows(QModelIndex(), parent->childCount() - 1, parent->childCount() - 1);
+    beginInsertRows(QModelIndex(), qMax(parent->childCount() - 1, 0), qMax(parent->childCount() - 1, 0));
     child->setParentItem(parent);
     parent->appendChild(child);
     endInsertRows();
@@ -148,7 +148,7 @@ void TreeModel::removeItem(TreeItem* item)
     emit layoutAboutToBeChanged();
 
     if (item->parentItem()) {
-        beginRemoveRows(QModelIndex(), item->parentItem()->childCount() - 1, item->parentItem()->childCount());
+        beginRemoveRows(QModelIndex(), qMax(item->childCount() - 1, 0), qMax(item->childCount(), 0));
         item->parentItem()->removeChild(item);
         endRemoveRows();
     }
