@@ -29,54 +29,55 @@
 
 /*!
  * This class represents a node of the TreeModel.
- * TreeItem can be used to set and retreive information about the node,
- * insertion and removal is meant to be deal by the model.
+ * The items are meant to be managed from the TreeModel, thus is only allowed
+ * to modify the stored data.
+ * Parenting and deletion are dealt from the TreeModel. Deleting a TreeItem
+ * will call the delete for each child node.
  */
 class TreeItem
 {
-   friend class TreeModel;
+    friend class TreeModel;
 
 public:
-   //! Instance a tree item with empty data.
-   TreeItem();
+    //! Create an empty item.
+    TreeItem();
 
-   //! Instance a tree with the input data.
-   explicit TreeItem(const QVariant& data);
+    //! Create an item with the given data.
+    explicit TreeItem(const QVariant& data);
 
-   //! Destroy the item and all its children.
-   ~TreeItem();
+    //! Destroy the item. It will destroy every child.
+    ~TreeItem();
 
-   //! Return the internal data.
-   const QVariant& data() const;
+    //! Return the stored data of the node.
+    const QVariant& data() const;
 
-   //! Set the internal data.
-   void setData(const QVariant& data);
+    //! Set the internal data of the node.
+    void setData(const QVariant& data);
 
-   //! Return the number of children of the item.
-   int childCount() const;
+    //! Return the number of children nodes.
+    int childCount() const;
 
-   //! Return the number of the row referred to the parent item.
-   int row() const;
+    int row() const;
 
-   //! Return true if the item has no children.
-   bool isLeaf() const;
+    //! Return true if the node is a leaf node (no children).
+    bool isLeaf() const;
 
-   //! Return the depth of the item in the hierarchy.
-   int depth() const;
-
-private:
-   TreeItem* parentItem();
-   void setParentItem(TreeItem* parentItem);
-
-   void appendChild(TreeItem* item);
-   void removeChild(TreeItem* item);
-
-   TreeItem* child(int row);
+    //! Return the depth of this node inside the tree.
+    int depth() const;
 
 private:
-   QVariant _itemData;
-   TreeItem* _parentItem;
-   QVector<TreeItem*> _childItems;
+    TreeItem* parentItem();
+    void setParentItem(TreeItem* parentItem);
+
+    void appendChild(TreeItem* item);
+    void removeChild(TreeItem* item);
+
+    TreeItem* child(int row);
+
+private:
+    QVariant _itemData;
+    TreeItem* _parentItem;
+    QVector<TreeItem*> _childItems;
 };
 
 #endif // QML_TREEVIEW_TREE_ITEM_H
