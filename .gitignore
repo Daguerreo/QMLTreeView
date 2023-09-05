@@ -37,9 +37,12 @@ Makefile*
 *.out
 *.app
 
-# Qt 
+# Qt
+.qtc_clangd 
 *.pro.user*
 *.qmlproject.user
 **.qmake.stash
 **moc_predefs.h
-**/build
+
+# Build
+**/build*
