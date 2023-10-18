@@ -23,3 +23,6 @@ SOURCES += \
    main.cpp
 
 include(../../modules/qmltreeview.pri)
+
+MOC_DIR = mocs
+OBJECTS_DIR = obj

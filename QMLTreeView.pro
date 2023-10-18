@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-   examples
+   examples \
+   tests
 
 OTHER_FILES += \
    $$files(modules/QMLTreeView/*) \

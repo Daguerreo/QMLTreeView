@@ -30,9 +30,11 @@ TreeItem::TreeItem()
 {}
 
 TreeItem::TreeItem(const QVariant& data)
-    : _itemData(data)
+    : _itemData()
     , _parentItem(nullptr)
-{}
+{
+    setData(data);
+}
 
 TreeItem::~TreeItem()
 {
@@ -73,14 +75,14 @@ int TreeItem::childCount() const
     return _childItems.count();
 }
 
-const QVariant& TreeItem::data() const
+QVariant TreeItem::data(int role) const
 {
-    return _itemData;
+    return _itemData.value(role);
 }
 
-void TreeItem::setData(const QVariant& data)
+void TreeItem::setData(const QVariant& data, int role)
 {
-    _itemData = data;
+    _itemData[role] = data;
 }
 
 bool TreeItem::isLeaf() const
