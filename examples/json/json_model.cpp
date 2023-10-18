@@ -15,8 +15,7 @@ QHash<int, QByteArray> JsonModel::roleNames() const
 {
     static const QHash<int, QByteArray> roles = {
         { ValueRole, "value" },
-        { KeyRole, "key" },
-        { TypeRole, "type" }
+        { KeyRole, "key" }
     };
 
     return roles;
@@ -48,9 +47,9 @@ void JsonModel::loadValue(const QJsonValue &value, TreeItem* parent)
 
             auto child = new TreeItem();
             child->setData(key, JsonModel::KeyRole);
-            child->setData(QJsonValue::Object, JsonModel::TypeRole);
 
             if (value.isArray() || value.isObject()) {
+                child->setData("", JsonModel::ValueRole);
                 loadValue(value, child);
                 addItem(parent, child);
             } else {
@@ -64,7 +63,7 @@ void JsonModel::loadValue(const QJsonValue &value, TreeItem* parent)
         for (auto&& element : array) {
             auto child = new TreeItem();
             child->setData("[" + QString::number(index) + "]", JsonModel::KeyRole);
-            child->setData(QJsonValue::Array, JsonModel::TypeRole);
+            child->setData("", JsonModel::ValueRole);
             addItem(parent, child);
             loadValue(element, child);
             ++index;
@@ -72,7 +71,6 @@ void JsonModel::loadValue(const QJsonValue &value, TreeItem* parent)
     } else {
         auto child = new TreeItem();
         child->setData(value.toVariant(), JsonModel::ValueRole);
-        child->setData(value.type(), JsonModel::TypeRole);
         addItem(parent, child);
     }
 }

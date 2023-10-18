@@ -40,8 +40,6 @@ Window {
 //            text: currentRow.currentData.value ? currentRow.currentData.value : ""
             text: currentRow.currentDataForRole(257)
          }
-
-//         Component.onCompleted: console.log(currentRow.currentData)
       }
    }
 }

@@ -10,8 +10,7 @@ class JsonModel : public TreeModel
 public:
     enum Roles {
         ValueRole = Qt::UserRole + 1,
-        KeyRole,
-        TypeRole
+        KeyRole
     };
 
     explicit JsonModel(QObject* parent = nullptr);
