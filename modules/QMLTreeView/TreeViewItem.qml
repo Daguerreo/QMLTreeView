@@ -137,6 +137,9 @@ Item {
 
                function toggle(){ if(_prop.hasChildren) _prop.expanded = !_prop.expanded }
 
+               function currentDataForRole(role) {
+                  return root.model.data(currentIndex, role)
+               }
             }
 
             Connections {

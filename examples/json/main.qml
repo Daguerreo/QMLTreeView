@@ -27,7 +27,8 @@ Window {
          Text {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
-            text: currentRow.currentData.key
+//            text: currentRow.currentData.key
+            text: currentRow.currentDataForRole(258)
          }
 
          Text {
@@ -36,8 +37,11 @@ Window {
 
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignRight
-            text: currentRow.currentData.value ? currentRow.currentData.value : ""
+//            text: currentRow.currentData.value ? currentRow.currentData.value : ""
+            text: currentRow.currentDataForRole(257)
          }
+
+//         Component.onCompleted: console.log(currentRow.currentData)
       }
    }
 }

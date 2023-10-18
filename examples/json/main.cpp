@@ -1,5 +1,6 @@
 #include "json_entry.h"
 #include "tree_model.h"
+#include "json_model.h"
 
 #include <QFile>
 #include <QGuiApplication>
@@ -73,8 +74,11 @@ int main(int argc, char* argv[])
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:/modules");
 
-    auto jsonModel = new TreeModel(&engine);
-    populateModel(*jsonModel);
+//    auto jsonModel = new TreeModel(&engine);
+//    populateModel(*jsonModel);
+
+    auto jsonModel = new JsonModel(&engine);
+    jsonModel->loadJson(":/sample.json");
 
     engine.rootContext()->setContextProperty("jsonModel", jsonModel);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
