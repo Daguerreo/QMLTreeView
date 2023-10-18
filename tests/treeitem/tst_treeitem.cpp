@@ -11,6 +11,15 @@ class TestTreeItem : public QObject
         BazRole
     };
 
+private:
+    auto createItem() {
+        return std::make_unique<TreeItem>();
+    }
+
+    auto createItem(QVariant data) {
+        return std::make_unique<TreeItem>(std::move(data));
+    }
+
 private slots:
     void defaultConstructor();
 
@@ -20,14 +29,8 @@ private slots:
     void setData_data();
     void setData();
 
-private:
-    auto createItem() {
-        return std::make_unique<TreeItem>();
-    }
-
-    auto createItem(QVariant data) {
-        return std::make_unique<TreeItem>(std::move(data));
-    }
+    void roles();
+    void itemData();
 };
 
 void TestTreeItem::defaultConstructor()
@@ -39,6 +42,8 @@ void TestTreeItem::defaultConstructor()
     QCOMPARE(item->row(), 0);
     QCOMPARE(item->depth(), 0);
     QCOMPARE(item->isLeaf(), true);
+    QVERIFY(item->roles().isEmpty());
+    QVERIFY(item->itemData().isEmpty());
 }
 
 void TestTreeItem::constructor_data()
@@ -88,6 +93,34 @@ void TestTreeItem::setData()
     QVERIFY(!data.isNull());
     QCOMPARE(outData, data);
 }
+
+void TestTreeItem::roles()
+{
+    auto item = createItem();
+    item->setData(1, FooRole);
+    item->setData(2, BarRole);
+
+    const auto roles = item->roles();
+    QCOMPARE(roles.size(), 2);
+    QVERIFY(roles.contains(FooRole));
+    QVERIFY(roles.contains(BarRole));
+}
+
+void TestTreeItem::itemData()
+{
+    auto item = createItem();
+    item->setData(1, FooRole);
+    item->setData(2, BarRole);
+
+    const auto itemData = item->itemData();
+    const auto dataMap = QMap<int, QVariant>{{
+        { FooRole, 1 },
+        { BarRole, 2 }
+    }};
+    QCOMPARE(itemData, dataMap);
+}
+
+
 
 QTEST_APPLESS_MAIN(TestTreeItem)
 

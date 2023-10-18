@@ -102,7 +102,7 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
         return false;
     }
 
-    if (auto item = internalPointer(index)) {
+    if (auto item = internalPointer(index); item && (role != Qt::DisplayRole)) {
         item->setData(value, role);
         emit dataChanged(index, index, {role});
     }

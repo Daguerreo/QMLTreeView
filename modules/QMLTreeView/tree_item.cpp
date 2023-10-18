@@ -70,6 +70,11 @@ TreeItem* TreeItem::child(int row)
     return _childItems.value(row);
 }
 
+QMap<int, QVariant> TreeItem::itemData() const
+{
+    return _itemData;
+}
+
 int TreeItem::childCount() const
 {
     return _childItems.count();

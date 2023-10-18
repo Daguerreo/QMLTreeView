@@ -66,6 +66,12 @@ public:
     //! Return the depth of this node inside the tree.
     int depth() const;
 
+    //! Return all the roles used by the item.
+    QList<int> roles() const { return _itemData.keys(); }
+
+    //! Return alla the data setted for the item.
+    QMap<int, QVariant> itemData() const;
+
 private:
     TreeItem* parentItem();
     void setParentItem(TreeItem* parentItem);
