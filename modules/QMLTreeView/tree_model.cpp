@@ -90,7 +90,7 @@ QModelIndex TreeModel::parent(const QModelIndex& index) const
 QVariant TreeModel::data(const QModelIndex& index, const int role) const
 {
     if (!index.isValid()) {
-        return QVariant();
+        return {};
     }
 
     return internalPointer(index)->data(role);
@@ -102,7 +102,8 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
         return false;
     }
 
-    if (auto item = internalPointer(index); item && (role != Qt::DisplayRole)) {
+    auto item = internalPointer(index);
+    if (item && (role != Qt::DisplayRole)) {
         item->setData(value, role);
         emit dataChanged(index, index, {role});
     }

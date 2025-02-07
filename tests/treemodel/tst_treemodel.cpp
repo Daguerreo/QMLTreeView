@@ -1,5 +1,6 @@
-#include <QtTest>
 #include "tree_model.h"
+
+#include <QtTest>
 
 class TestTreeModel : public QObject
 {
@@ -12,17 +13,11 @@ private:
         BazRole
     };
 
-    auto createModel() {
-        return std::make_unique<TreeModel>();
-    }
+    std::shared_ptr<TreeModel> createModel() { return std::make_shared<TreeModel>(); }
 
-    auto createItem() {
-        return new TreeItem();
-    }
+    TreeItem* createItem() { return new TreeItem(); }
 
-    auto createItem(QVariant data) {
-        return new TreeItem(std::move(data));
-    }
+    TreeItem* createItem(QVariant data) { return new TreeItem(data); }
 
 private slots:
     void addItems();
@@ -30,7 +25,6 @@ private slots:
     void setDataMultipleTimes();
     void removeItem();
 };
-
 
 void TestTreeModel::addItems()
 {
@@ -59,7 +53,6 @@ void TestTreeModel::addItems()
     QCOMPARE(model->rowCount(parentIndex), 2);
     QCOMPARE(model->rowCount(childIndex), 0);
     QCOMPARE(model->rowCount(brotherIndex), 0);
-
 }
 
 void TestTreeModel::addCustomData()

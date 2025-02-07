@@ -7,7 +7,7 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES +=  tst_treemodel.cpp
-CONFIG += c++17
+CONFIG += c++11
 
 include(../../modules/qmltreeview.pri)
 
