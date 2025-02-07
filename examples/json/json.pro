@@ -17,10 +17,13 @@ RESOURCES += \
    resources.qrc
 
 HEADERS += \
-   json_entry.h
+   json_model.h
 
 SOURCES += \
-  json_entry.cpp \
+  json_model.cpp \
   main.cpp
 
 include(../../modules/qmltreeview.pri)
+
+MOC_DIR = mocs
+OBJECTS_DIR = obj

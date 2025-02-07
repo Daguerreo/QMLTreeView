@@ -27,7 +27,7 @@ Window {
          Text {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
-            text: currentRow.currentData.key
+            text: currentRow.dataForRole(jsonModel.role("key"))
          }
 
          Text {
@@ -36,7 +36,11 @@ Window {
 
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignRight
-            text: currentRow.currentData.value ? currentRow.currentData.value : ""
+            text: currentRow.dataForRole(jsonModel.role("value"))
+         }
+
+         Component.onCompleted: {
+            console.log(jsonView.model, jsonView.model.display)
          }
       }
    }
