@@ -5,7 +5,13 @@ This project provides a **QML Tree View** with a **C++ Tree Model** for **Qt 5.1
 Since **Qt 6.3** [TreeView](https://doc.qt.io/qt-6/qml-qtquick-treeview.html) has been added as standard component.
 It is suggested to use the standard one.
 
+## Requirements
+
+- Minimum Qt version: 5.15 (works with Qt6)
+- Minimum C++ version: C++11
+
 ## Features
+
  - QML Tree View
  - C++ Tree Model
  - Item selection
@@ -18,7 +24,6 @@ It is suggested to use the standard one.
 # Usage
 
 ## C++
-
 
 ```
 int main()
@@ -50,7 +55,6 @@ int main()
 
 ## QML
 
-
 Expose and populate the TreeModel from C++, then just initialize it 
 
 ```
@@ -65,7 +69,6 @@ and this is the result
 
 
 # Platforms
-
 
 Code has been tested in the following OS:
 
