@@ -50,7 +50,7 @@ public:
     QModelIndex index(int row, int column, const QModelIndex& parent) const override;
     QModelIndex parent(const QModelIndex& childIndex) const override;
 
-    QVariant data(const QModelIndex& index, int role = 0) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
 
 public:

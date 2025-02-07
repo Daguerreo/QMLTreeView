@@ -42,21 +42,22 @@ public:
     //! Create an empty item.
     TreeItem();
 
-    //! Create an item with the given data.
+    //! Create an item with the given data. The input data is associated with the Qt::DisplayRole.
     explicit TreeItem(const QVariant& data);
 
     //! Destroy the item. It will destroy every child.
     ~TreeItem();
 
     //! Return the stored data of the node.
-    const QVariant& data() const;
+    QVariant data(int role = Qt::DisplayRole) const;
 
     //! Set the internal data of the node.
-    void setData(const QVariant& data);
+    void setData(const QVariant& data, int role = Qt::DisplayRole);
 
     //! Return the number of children nodes.
     int childCount() const;
 
+    //! Return the number of row referred to its parent.
     int row() const;
 
     //! Return true if the node is a leaf node (no children).
@@ -64,6 +65,12 @@ public:
 
     //! Return the depth of this node inside the tree.
     int depth() const;
+
+    //! Return all the roles used by the item.
+    QList<int> roles() const;
+
+    //! Return alla the data setted for the item.
+    QMap<int, QVariant> itemData() const;
 
 private:
     TreeItem* parentItem();
@@ -75,7 +82,7 @@ private:
     TreeItem* child(int row);
 
 private:
-    QVariant _itemData;
+    QMap<int, QVariant> _itemData;
     TreeItem* _parentItem;
     QVector<TreeItem*> _childItems;
 };

@@ -23,3 +23,6 @@ SOURCES += \
   tree_manipulator.cpp
 
 include(../../modules/qmltreeview.pri)
+
+MOC_DIR = mocs
+OBJECTS_DIR = obj
