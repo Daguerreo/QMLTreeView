@@ -107,6 +107,11 @@ int TreeItem::depth() const
     return depth;
 }
 
+QList<int> TreeItem::roles() const
+{
+    return _itemData.keys();
+}
+
 int TreeItem::row() const
 {
     if (_parentItem) {

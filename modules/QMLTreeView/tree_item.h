@@ -67,7 +67,7 @@ public:
     int depth() const;
 
     //! Return all the roles used by the item.
-    QList<int> roles() const { return _itemData.keys(); }
+    QList<int> roles() const;
 
     //! Return alla the data setted for the item.
     QMap<int, QVariant> itemData() const;

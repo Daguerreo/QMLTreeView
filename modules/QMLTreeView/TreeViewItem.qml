@@ -135,8 +135,10 @@ Item {
                readonly property bool isHoveredIndex: root.hoverEnabled && currentIndex === root.hoveredIndex
                readonly property bool isSelectedAndHoveredIndex: hoverEnabled && selectionEnabled && isHoveredIndex && isSelectedIndex
 
+               //! Toggle the expansion of the current row.
                function toggle(){ if(_prop.hasChildren) _prop.expanded = !_prop.expanded }
 
+               //! Get the data for the selected role.
                function currentDataForRole(role) {
                   return root.model.data(currentIndex, role)
                }
