@@ -159,7 +159,9 @@ currentRow possess the following properties:
 - ```isHoveredIndex```
 - ```isSelectedAndHoveredIndex```
 
-```currentRow.toggle()``` toggles the expansion of the current section.
+`currentRow` possess the following methods:
+- `currentRow.toggle()` toggles the expansion of the current section.
+- `currentRow.dataForRole(int)` get the value for the input role.
 
 ```
 TreeView {
@@ -238,6 +240,17 @@ Data access for row element is provided by the properties:
 - ```currentIndex```: return the model index for the selected element
 - ```currentData```: return the data for the selected element
 - ```currentItem```: return the visual item of the selected element
+
+### Access Custom Roles
+
+If your model support multiple roles, use `currentRow.dataForRole(int)`
+to access the desired role.
+
+**Json Example** show the use of the custom role: 
+
+```
+text: currentRow.dataForRole(jsonModel.role("value"))
+```
 
 ## Node Manipulation
 
