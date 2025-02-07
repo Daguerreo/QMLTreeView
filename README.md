@@ -241,13 +241,6 @@ Data access for row element is provided by the properties:
 - ```currentData```: return the data for the selected element
 - ```currentItem```: return the visual item of the selected element
 
-### Access Custom Roles
-
-If your model support multiple roles, use `currentRow.dataForRole(int)`
-to access the desired role.
-
-**Json Example** show the use of the custom role: 
-
 ```
 text: currentRow.dataForRole(jsonModel.role("value"))
 ```
@@ -259,11 +252,12 @@ Take a look at the **Manipulator Example** which show a way to manipulate the tr
 
 ![](img/manipulator.png)
 
-## Customizing Models
+## Custom Roles
 
-Since the tree item store a ```QVariant``` as data, it's possible to register your custom type with ```Q_DECLARE_METATYPE``` and use the ```TreeModel``` as is without modifying it.
+If your model support multiple roles, use `currentRow.dataForRole(int)`
+to access the desired role.
 
-**JsonTreeView** example show how to achieve that, declaring a ```JsonEntry``` class and providing it to the model.
+**Json Example** show the use of the custom role: 
 
 ```
 {
@@ -307,7 +301,7 @@ TreeView {
       Text {
          verticalAlignment: Text.AlignVCenter
          horizontalAlignment: Text.AlignLeft
-         text: currentRow.currentData.key
+         text: currentRow.dataForRole(jsonModel.role("key"))
       }
       
       Text {
@@ -316,7 +310,7 @@ TreeView {
          
          verticalAlignment: Text.AlignVCenter
          horizontalAlignment: Text.AlignRight
-         text: currentRow.currentData.value ? currentRow.currentData.value : ""
+         text: currentRow.dataForRole(jsonModel.role("value"))
       }
    }
 }
